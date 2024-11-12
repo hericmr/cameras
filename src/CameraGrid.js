@@ -52,7 +52,7 @@ function CameraGrid({ onImageClick }) {
     }, []);
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
             {cameraUrls.map((camera, index) => (
                 <CameraCard key={index} camera={camera} index={index} onImageClick={onImageClick} />
             ))}
