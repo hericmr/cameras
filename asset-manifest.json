@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/cameras/static/css/main.213b00a0.css",
-    "main.js": "/cameras/static/js/main.5c3af5a9.js",
+    "main.js": "/cameras/static/js/main.b9782396.js",
     "static/js/453.0c7d83ea.chunk.js": "/cameras/static/js/453.0c7d83ea.chunk.js",
     "index.html": "/cameras/index.html",
     "main.213b00a0.css.map": "/cameras/static/css/main.213b00a0.css.map",
-    "main.5c3af5a9.js.map": "/cameras/static/js/main.5c3af5a9.js.map",
+    "main.b9782396.js.map": "/cameras/static/js/main.b9782396.js.map",
     "453.0c7d83ea.chunk.js.map": "/cameras/static/js/453.0c7d83ea.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.213b00a0.css",
-    "static/js/main.5c3af5a9.js"
+    "static/js/main.b9782396.js"
   ]
 }
