@@ -17,12 +17,12 @@ function FullScreenImage({ imageUrl, close }) {
     }, [imageUrl]);
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-            <div className="relative">
+        <div className="fixed inset-0 bg-black bg-opacity-85 flex justify-center items-center z-90">
+            <div className="relative w-full h-full">
                 <img
                     src={currentImageUrl}
                     alt="Imagem em tela cheia"
-                    className="max-w-full max-h-full object-contain"
+                    className="w-full h-full object-contain"
                 />
                 <button
                     onClick={close}

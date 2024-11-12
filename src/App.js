@@ -1,7 +1,10 @@
-// App.js
+
+import Navbar from './Navbar';
+import Footer from './Footer';
+
+
 import React, { useState, useEffect } from 'react';
 import FullScreenImage from './FullScreenImage.js';
-import Title from './Title.js'; // Importe o componente Title
 
 const cameras = {
   "0": {"lugar": "Canal 6", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1593/snap_c1.jpg?1677157043869"},
@@ -34,76 +37,83 @@ const cameras = {
   "31": {"lugar": "Câmera 0434", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1839/snap_c1.jpg?1731373071495"},
 };
 
+
 function App() {
     const [cameraUrls, setCameraUrls] = useState(Object.values(cameras));
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [currentImage, setCurrentImage] = useState(null);
     const [previousImages, setPreviousImages] = useState({});
-  
+
     useEffect(() => {
-      const updateImages = () => {
-        const updatedCameras = Object.keys(cameras).map(key => ({
-          ...cameras[key],
-          url: `${cameras[key].url}&t=${new Date().getTime()}` // Atualiza a URL para evitar cache
-        }));
-        setCameraUrls(updatedCameras);
-      };
-  
-      const interval = setInterval(updateImages, 3000); // Atualiza a cada 3 segundos
-      updateImages();
-  
-      return () => clearInterval(interval);
+        const updateImages = () => {
+            const updatedCameras = Object.keys(cameras).map(key => ({
+                ...cameras[key],
+                url: `${cameras[key].url}&t=${new Date().getTime()}` // Atualiza a URL para evitar cache
+            }));
+            setCameraUrls(updatedCameras);
+        };
+
+        const interval = setInterval(updateImages, 3000); // Atualiza a cada 3 segundos
+        updateImages();
+
+        return () => clearInterval(interval);
     }, []);
-  
+
     const handleImageClick = (url) => {
-      setCurrentImage(url);
-      setIsFullScreen(true);
+        setCurrentImage(url);
+        setIsFullScreen(true);
     };
-  
+
     const closeFullScreen = () => {
-      setIsFullScreen(false);
-      setCurrentImage(null);
+        setIsFullScreen(false);
+        setCurrentImage(null);
     };
-  
+
     const handleImageError = (index) => {
-      setCameraUrls(prevUrls =>
-        prevUrls.map((camera, i) =>
-          i === index ? { ...camera, url: previousImages[index] || camera.url } : camera
-        )
-      );
+        setCameraUrls(prevUrls =>
+            prevUrls.map((camera, i) =>
+                i === index ? { ...camera, url: previousImages[index] || camera.url } : camera
+            )
+        );
     };
-  
+
     const handleImageLoad = (index) => {
-      setPreviousImages(prev => ({
-        ...prev,
-        [index]: cameraUrls[index].url
-      }));
+        setPreviousImages(prev => ({
+            ...prev,
+            [index]: cameraUrls[index].url
+        }));
     };
-  
+
     return (
-      <div className="min-h-screen bg-gray-200 p-0 flex flex-col items-center justify-center">
-        <Title />
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0">
-          {cameraUrls.map((camera, index) => (
-            <div key={index} className="relative">
-              <img
-                src={camera.url}
-                alt={camera.lugar}
-                className="w-full h-auto object-cover rounded-none cursor-pointer"
-                onClick={() => handleImageClick(camera.url)}
-                onError={() => handleImageError(index)}
-                onLoad={() => handleImageLoad(index)}
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-opacity-10 bg-black text-white p-2 text-sm text-center">
-                {camera.lugar}
-              </div>
+      
+      <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow"></main>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0">
+                {cameraUrls.map((camera, index) => (
+                    <div key={index} className="relative">
+                        <img
+                            src={camera.url}
+                            alt={camera.lugar}
+                            className="w-full h-auto object-cover rounded-none cursor-pointer"
+                            onClick={() => handleImageClick(camera.url)}
+                            onError={() => handleImageError(index)}
+                            onLoad={() => handleImageLoad(index)}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-opacity-10 bg-black text-white p-2 text-sm text-center">
+                            {camera.lugar}
+                        </div>
+                    </div>
+                ))}
             </div>
-          ))}
+
+            {isFullScreen && <FullScreenImage imageUrl={currentImage} close={closeFullScreen} />}
+        
+        <div className="flex-grow"></div>
+        <Footer />
         </div>
-  
-        {isFullScreen && <FullScreenImage imageUrl={currentImage} close={closeFullScreen} />}
-      </div>
     );
-  }
-  
-  export default App;
+}
+
+export default App;
