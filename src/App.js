@@ -21,8 +21,17 @@ const cameras = {
   "18": {"lugar": "Câmera 1846", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1846/snap_c1.jpg?1731350899117"},
   "19": {"lugar": "Câmera 0436", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0436/snap_c1.jpg?1731351036758"},
   "20": {"lugar": "Acesso a Praia Canal 1", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0416/snap_c1.jpg?1731353613270"},
-  "21": {"lugar": "Praça das Bandeiras", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0443/snap_c1.jpg?1731353706967"}
+  "21": {"lugar": "Praça das Bandeiras", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0443/snap_c1.jpg?1731353706967"},
   "22": {"lugar": "Canal 4", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1529/snap_c1.jpg?1731367713141"},
+  "23": {"lugar": "Câmera 1528", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1743/snap_c1.jpg?1731372528173"},
+  "24": {"lugar": "Câmera 1744", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0421/snap_c1.jpg?1731372621823"},
+  "25": {"lugar": "Câmera 0421", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0439/snap_c1.jpg?1731372676920"},
+  "26": {"lugar": "Câmera 0439", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0437/snap_c1.jpg?1731372770766"},
+  "27": {"lugar": "Câmera 0437", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0419/snap_c1.jpg?1731372833194"},
+  "28": {"lugar": "Câmera 0419", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0436/snap_c1.jpg?1731372872578"},
+  "29": {"lugar": "Câmera 0436", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1782/snap_c1.jpg?1731372913209"}, 
+  "30": {"lugar": "Câmera 1782", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0434/snap_c1.jpg?1731372974796"},
+  "31": {"lugar": "Câmera 0434", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1839/snap_c1.jpg?1731373071495"},
 };
 
 function App() {

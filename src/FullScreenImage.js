@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function FullScreenImage({ imageUrl, close }) {
+    const [currentImageUrl, setCurrentImageUrl] = useState(imageUrl);
+
+    useEffect(() => {
+        // Função para atualizar a URL da imagem com um timestamp
+        const updateImage = () => {
+            setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
+        };
+
+        // Atualiza a imagem a cada 3 segundos
+        const interval = setInterval(updateImage, 3000);
+        updateImage(); // Chama a função de atualização imediatamente ao montar o componente
+
+        return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+    }, [imageUrl]);
+
     return (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
             <div className="relative">
                 <img
-                    src={imageUrl}
+                    src={currentImageUrl}
                     alt="Imagem em tela cheia"
                     className="max-w-full max-h-full object-contain"
                 />
