@@ -45,14 +45,14 @@ function CameraGrid({ onImageClick }) {
             setCameraUrls(updatedCameras);
         };
 
-        const interval = setInterval(updateImages, 4500);
+        const interval = setInterval(updateImages, 5500);
         updateImages();
 
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
             {cameraUrls.map((camera, index) => (
                 <CameraCard key={index} camera={camera} index={index} onImageClick={onImageClick} />
             ))}
