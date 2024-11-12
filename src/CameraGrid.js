@@ -45,7 +45,7 @@ function CameraGrid({ onImageClick }) {
             setCameraUrls(updatedCameras);
         };
 
-        const interval = setInterval(updateImages, 5500);
+        const interval = setInterval(updateImages, 6000);
         updateImages();
 
         return () => clearInterval(interval);
