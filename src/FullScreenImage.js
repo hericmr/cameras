@@ -17,7 +17,7 @@ function FullScreenImage({ imageUrl, close }) {
     }, [imageUrl]);
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-85 flex justify-center items-center z-90">
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-90">
             <div className="relative w-full h-full">
                 <img
                     src={currentImageUrl}

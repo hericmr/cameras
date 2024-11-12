@@ -3,7 +3,11 @@ module.exports = {
     "./src/**/*.{html,js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        cyberpunk: ['Orbitron', 'sans-serif'], // Define a fonte personalizada
+      },
+    },
   },
   plugins: [],
-}
+};
