@@ -1,3 +1,7 @@
+// CameraGrid.js
+import React, { useEffect, useState } from 'react';
+import CameraCard from './CameraCard';
+
 const cameras = {
     "0": {"lugar": "Canal 6", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1593/snap_c1.jpg?1677157043869"},
     "1": {"lugar": "Canoagem", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1464/snap_c1.jpg?1677191520757"},
@@ -28,4 +32,32 @@ const cameras = {
     "30": {"lugar": "Câmera 1782", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam0434/snap_c1.jpg?1731372974796"},
     "31": {"lugar": "Câmera 0434", "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1839/snap_c1.jpg?1731373071495"},
   };
-  
+
+function CameraGrid({ onImageClick }) {
+    const [cameraUrls, setCameraUrls] = useState(Object.values(cameras));
+
+    useEffect(() => {
+        const updateImages = () => {
+            const updatedCameras = Object.keys(cameras).map(key => ({
+                ...cameras[key],
+                url: `${cameras[key].url}&t=${new Date().getTime()}`
+            }));
+            setCameraUrls(updatedCameras);
+        };
+
+        const interval = setInterval(updateImages, 3000);
+        updateImages();
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0">
+            {cameraUrls.map((camera, index) => (
+                <CameraCard key={index} camera={camera} index={index} onImageClick={onImageClick} />
+            ))}
+        </div>
+    );
+}
+
+export default CameraGrid;

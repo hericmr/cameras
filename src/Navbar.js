@@ -8,13 +8,13 @@ function Navbar() {
                 {/* Logotipo com filtro invertido aplicado em CSS inline */}
                 <a href="/" className="flex items-center space-x-2">
                     <img
-                        src="../public/logo.png?raw=true"
+                        src="https://github.com/hericmr/cameras/blob/main/public/logo.png?raw=true"
                         alt="Logo"
                         className="h-6 w-6"
                         style={{ filter: "invert(1)" }} // Aplica a inversão de cores
                     />
                     <span className="text-lg font-semibold hover:text-gray-200 transition duration-300">
-                        Santos Cameras
+                         Cameras de Santos ao vivo 
                     </span>
                 </a>
                 <div className="space-x-3">
