@@ -8,7 +8,7 @@ function Navbar() {
                 {/* Logotipo com filtro invertido aplicado em CSS inline */}
                 <a href="/" className="flex items-center space-x-2">
                     <img
-                        src="/logo192.png"
+                        src="/logo.png"
                         alt="Logo"
                         className="h-6 w-6"
                         style={{ filter: "invert(1)" }} // Aplica a inversão de cores
