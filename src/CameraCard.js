@@ -16,7 +16,7 @@ function CameraCard({ camera, onImageClick }) {
         <div className="relative">
             <img
                 src={imageUrl}
-                
+                alt={camera.lugar}
                 className="w-full h-auto object-cover rounded-none cursor-pointer"
                 onClick={() => onImageClick(camera.url)}
                 onError={handleImageError}
