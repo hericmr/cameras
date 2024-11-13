@@ -186,482 +186,482 @@ const cameras = {
         lugar: "Lugar Desconhecido 101",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1553/snap_c1.jpg?1731510159174"
     },
-    102: {
+    "102": {
         lugar: "Lugar Desconhecido 102",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1549/snap_c1.jpg?1731510159174"
     },
-    103: {
+    "103": {
         lugar: "Lugar Desconhecido 103",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1548/snap_c1.jpg?1731510159174"
     },
-    104: {
+    "104": {
         lugar: "Lugar Desconhecido 104",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1547/snap_c1.jpg?1731510159175"
     },
-    105: {
+    "105": {
         lugar: "Lugar Desconhecido 105",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1546/snap_c1.jpg?1731510159175"
     },
-    106: {
+    "106": {
         lugar: "Lugar Desconhecido 106",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1544/snap_c1.jpg?1731510159175"
     },
-    107: {
+    "107": {
         lugar: "Lugar Desconhecido 107",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1542/snap_c1.jpg?1731510159175"
     },
-    108: {
+    "108": {
         lugar: "Lugar Desconhecido 108",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1541/snap_c1.jpg?1731510159175"
     },
-    109: {
+    "109": {
         lugar: "Lugar Desconhecido 109",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1540/snap_c1.jpg?1731510159175"
     },
-    90: {
+    "90": {
         lugar: "Lugar Desconhecido 90",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1571/snap_c1.jpg?1731510159171"
     },
-    91: {
+    "91": {
         lugar: "Lugar Desconhecido 91",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1569/snap_c1.jpg?1731510159172"
     },
-    92: {
+    "92": {
         lugar: "Lugar Desconhecido 92",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1565/snap_c1.jpg?1731510159172"
     },
-    93: {
+    "93": {
         lugar: "Lugar Desconhecido 93",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1564/snap_c1.jpg?1731510159172"
     },
-    94: {
+    "94": {
         lugar: "Lugar Desconhecido 94",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1563/snap_c1.jpg?1731510159172"
     },
-    95: {
+    "95": {
         lugar: "Lugar Desconhecido 95",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1561/snap_c1.jpg?1731510159173"
     },
-    96: {
+    "96": {
         lugar: "Lugar Desconhecido 96",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1559/snap_c1.jpg?1731510159173"
     },
-    97: {
+    "97": {
         lugar: "Lugar Desconhecido 97",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1558/snap_c1.jpg?1731510159173"
     },
-    98: {
+    "98": {
         lugar: "Lugar Desconhecido 98",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1557/snap_c1.jpg?1731510159173"
     },
-    99: {
+    "99": {
         lugar: "Lugar Desconhecido 99",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1555/snap_c1.jpg?1731510159173"
     },
-    100: {
+    "100": {
         lugar: "Lugar Desconhecido 100",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1554/snap_c1.jpg?1731510159174"
     },
     
-    80: {
+    "80": {
         lugar: "Lugar Desconhecido 80",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1589/snap_c1.jpg?1731510159169"
     },
-    81: {
+    "81": {
         lugar: "Lugar Desconhecido 81",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1588/snap_c1.jpg?1731510159169"
     },
-    82: {
+    "82": {
         lugar: "Lugar Desconhecido 82",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1584/snap_c1.jpg?1731510159170"
     },
-    83: {
+    "83": {
         lugar: "Lugar Desconhecido 83",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1581/snap_c1.jpg?1731510159170"
     },
-    84: {
+    "84": {
         lugar: "Lugar Desconhecido 84",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1580/snap_c1.jpg?1731510159170"
     },
-    85: {
+    "85": {
         lugar: "Lugar Desconhecido 85",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1579/snap_c1.jpg?1731510159170"
     },
-    86: {
+    "86": {
         lugar: "Lugar Desconhecido 86",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1578/snap_c1.jpg?1731510159170"
     },
-    87: {
+    "87": {
         lugar: "Lugar Desconhecido 87",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1577/snap_c1.jpg?1731510159171"
     },
-    88: {
+   "88": {
         lugar: "Lugar Desconhecido 88",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1575/snap_c1.jpg?1731510159171"
     },
-    89: {
+    "89": {
         lugar: "Lugar Desconhecido 89",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1572/snap_c1.jpg?1731510159171"
     },
-    69: {
+    "69": {
         lugar: "Lugar Desconhecido 69",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1606/snap_c1.jpg?1731510159167"
     },
-    70: {
+    "70": {
         lugar: "Lugar Desconhecido 70",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1604/snap_c1.jpg?1731510159167"
     },
-    71: {
+    "71": {
         lugar: "Lugar Desconhecido 71",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1603/snap_c1.jpg?1731510159167"
     },
-    72: {
+    "72": {
         lugar: "Lugar Desconhecido 72",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1598/snap_c1.jpg?1731510159168"
     },
-    73: {
+    "73": {
         lugar: "Lugar Desconhecido 73",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1597/snap_c1.jpg?1731510159168"
     },
-    74: {
+    "74": {
         lugar: "Lugar Desconhecido 74",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1596/snap_c1.jpg?1731510159168"
     },
-    75: {
+    "75": {
         lugar: "Lugar Desconhecido 75",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1595/snap_c1.jpg?1731510159168"
     },
-    76: {
+    "76": {
         lugar: "Lugar Desconhecido 76",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1594/snap_c1.jpg?1731510159168"
     },
-    77: {
+    "77": {
         lugar: "Lugar Desconhecido 77",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1593/snap_c1.jpg?1731510159168"
     },
-    78: {
+    "78": {
         lugar: "Lugar Desconhecido 78",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1592/snap_c1.jpg?1731510159169"
     },
-    79: {
+    "79": {
         lugar: "Lugar Desconhecido 79",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1591/snap_c1.jpg?1731510159169"
     },
-    58: {
+    "58": {
         lugar: "Lugar Desconhecido 58",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1646/snap_c1.jpg?1731510159161"
     },
-    59: {
+    "59": {
         lugar: "Lugar Desconhecido 59",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1637/snap_c1.jpg?1731510159163"
     },
-    60: {
+    "60": {
         lugar: "Lugar Desconhecido 60",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1632/snap_c1.jpg?1731510159163"
     },
-    61: {
+    "61": {
         lugar: "Lugar Desconhecido 61",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1631/snap_c1.jpg?1731510159163"
     },
-    62: {
+    "62": {
         lugar: "Lugar Desconhecido 62",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1629/snap_c1.jpg?1731510159164"
     },
-    63: {
+    "63": {
         lugar: "Lugar Desconhecido 63",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1628/snap_c1.jpg?1731510159164"
     },
-    64: {
+    "64": {
         lugar: "Lugar Desconhecido 64",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1621/snap_c1.jpg?1731510159165"
     },
-    65: {
+    "65": {
         lugar: "Lugar Desconhecido 65",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1620/snap_c1.jpg?1731510159165"
     },
-    66: {
+    "66": {
         lugar: "Lugar Desconhecido 66",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1617/snap_c1.jpg?1731510159165"
     },
-    67: {
+    "67": {
         lugar: "Lugar Desconhecido 67",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1616/snap_c1.jpg?1731510159165"
     },
-    68: {
+    "68": {
         lugar: "Lugar Desconhecido 68",
         url: "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1607/snap_c1.jpg?1731510159167"
     },
     "58": {
         "lugar": "Lugar Desconhecido 58",
-        "url": "https://example.com/cameras/cam1646/snap_c1.jpg?1731510159161"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/snap_c1.jpg?1731510159161"
     },
     "59": {
         "lugar": "Lugar Desconhecido 59",
-        "url": "https://example.com/cameras/cam1637/snap_c1.jpg?1731510159163"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1637/snap_c1.jpg?1731510159163"
     },
     "60": {
         "lugar": "Lugar Desconhecido 60",
-        "url": "https://example.com/cameras/cam1632/snap_c1.jpg?1731510159163"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1632/snap_c1.jpg?1731510159163"
     },
     "61": {
         "lugar": "Lugar Desconhecido 61",
-        "url": "https://example.com/cameras/cam1631/snap_c1.jpg?1731510159163"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1631/snap_c1.jpg?1731510159163"
     },
     "62": {
         "lugar": "Lugar Desconhecido 62",
-        "url": "https://example.com/cameras/cam1629/snap_c1.jpg?1731510159164"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1629/snap_c1.jpg?1731510159164"
     },
     "63": {
         "lugar": "Lugar Desconhecido 63",
-        "url": "https://example.com/cameras/cam1628/snap_c1.jpg?1731510159164"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1628/snap_c1.jpg?1731510159164"
     },
     "64": {
         "lugar": "Lugar Desconhecido 64",
-        "url": "https://example.com/cameras/cam1621/snap_c1.jpg?1731510159165"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1621/snap_c1.jpg?1731510159165"
     },
     "65": {
         "lugar": "Lugar Desconhecido 65",
-        "url": "https://example.com/cameras/cam1620/snap_c1.jpg?1731510159165"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1620/snap_c1.jpg?1731510159165"
     },
     "66": {
         "lugar": "Lugar Desconhecido 66",
-        "url": "https://example.com/cameras/cam1617/snap_c1.jpg?1731510159165"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1617/snap_c1.jpg?1731510159165"
     },
     "67": {
         "lugar": "Lugar Desconhecido 67",
-        "url": "https://example.com/cameras/cam1616/snap_c1.jpg?1731510159165"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1616/snap_c1.jpg?1731510159165"
     },
     "48": {
         "lugar": "Lugar Desconhecido 48",
-        "url": "https://example.com/cameras/cam1665/snap_c1.jpg?1731510159158"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1665/snap_c1.jpg?1731510159158"
     },
     "49": {
         "lugar": "Lugar Desconhecido 49",
-        "url": "https://example.com/cameras/cam1663/snap_c1.jpg?1731510159158"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1663/snap_c1.jpg?1731510159158"
     },
     "50": {
         "lugar": "Lugar Desconhecido 50",
-        "url": "https://example.com/cameras/cam1661/snap_c1.jpg?1731510159158"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1661/snap_c1.jpg?1731510159158"
     },
     "51": {
         "lugar": "Lugar Desconhecido 51",
-        "url": "https://example.com/cameras/cam1660/snap_c1.jpg?1731510159159"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1660/snap_c1.jpg?1731510159159"
     },
     "52": {
         "lugar": "Lugar Desconhecido 52",
-        "url": "https://example.com/cameras/cam1659/snap_c1.jpg?1731510159159"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1659/snap_c1.jpg?1731510159159"
     },
     "53": {
         "lugar": "Lugar Desconhecido 53",
-        "url": "https://example.com/cameras/cam1656/snap_c1.jpg?1731510159159"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1656/snap_c1.jpg?1731510159159"
     },
     "54": {
         "lugar": "Lugar Desconhecido 54",
-        "url": "https://example.com/cameras/cam1655/snap_c1.jpg?1731510159159"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1655/snap_c1.jpg?1731510159159"
     },
     "55": {
         "lugar": "Lugar Desconhecido 55",
-        "url": "https://example.com/cameras/cam1654/snap_c1.jpg?1731510159160"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1654/snap_c1.jpg?1731510159160"
     },
     "56": {
         "lugar": "Lugar Desconhecido 56",
-        "url": "https://example.com/cameras/cam1652/snap_c1.jpg?1731510159160"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1652/snap_c1.jpg?1731510159160"
     },
     "57": {
         "lugar": "Lugar Desconhecido 57",
-        "url": "https://example.com/cameras/cam1648/snap_c1.jpg?1731510159161"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1648/snap_c1.jpg?1731510159161"
     },
     "37": {
         "lugar": "Lugar Desconhecido 37",
-        "url": "https://example.com/cameras/cam1690/snap_c1.jpg?1731510159153"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1690/snap_c1.jpg?1731510159153"
     },
     "38": {
         "lugar": "Lugar Desconhecido 38",
-        "url": "https://example.com/cameras/cam1689/snap_c1.jpg?1731510159153"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1689/snap_c1.jpg?1731510159153"
     },
     "39": {
         "lugar": "Lugar Desconhecido 39",
-        "url": "https://example.com/cameras/cam1686/snap_c1.jpg?1731510159153"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1686/snap_c1.jpg?1731510159153"
     },
     "40": {
         "lugar": "Lugar Desconhecido 40",
-        "url": "https://example.com/cameras/cam1685/snap_c1.jpg?1731510159154"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1685/snap_c1.jpg?1731510159154"
     },
     "41": {
         "lugar": "Lugar Desconhecido 41",
-        "url": "https://example.com/cameras/cam1684/snap_c1.jpg?1731510159154"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1684/snap_c1.jpg?1731510159154"
     },
     "42": {
         "lugar": "Lugar Desconhecido 42",
-        "url": "https://example.com/cameras/cam1683/snap_c1.jpg?1731510159154"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1683/snap_c1.jpg?1731510159154"
     },
     "43": {
         "lugar": "Lugar Desconhecido 43",
-        "url": "https://example.com/cameras/cam1682/snap_c1.jpg?1731510159154"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1682/snap_c1.jpg?1731510159154"
     },
     "44": {
         "lugar": "Lugar Desconhecido 44",
-        "url": "https://example.com/cameras/cam1681/snap_c1.jpg?1731510159155"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1681/snap_c1.jpg?1731510159155"
     },
     "45": {
         "lugar": "Lugar Desconhecido 45",
-        "url": "https://example.com/cameras/cam1680/snap_c1.jpg?1731510159155"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1680/snap_c1.jpg?1731510159155"
     },
     "46": {
         "lugar": "Lugar Desconhecido 46",
-        "url": "https://example.com/cameras/cam1679/snap_c1.jpg?1731510159155"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1679/snap_c1.jpg?1731510159155"
     },
     "47": {
         "lugar": "Lugar Desconhecido 47",
-        "url": "https://example.com/cameras/cam1678/snap_c1.jpg?1731510159155"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1678/snap_c1.jpg?1731510159155"
     },
     "26": {
         "lugar": "Lugar Desconhecido 26",
-        "url": "https://example.com/cameras/cam1733/snap_c1.jpg?1731510159146"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1733/snap_c1.jpg?1731510159146"
     },
     "27": {
         "lugar": "Lugar Desconhecido 27",
-        "url": "https://example.com/cameras/cam1732/snap_c1.jpg?1731510159146"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1732/snap_c1.jpg?1731510159146"
     },
     "28": {
         "lugar": "Lugar Desconhecido 28",
-        "url": "https://example.com/cameras/cam1731/snap_c1.jpg?1731510159146"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1731/snap_c1.jpg?1731510159146"
     },
     "29": {
         "lugar": "Lugar Desconhecido 29",
-        "url": "https://example.com/cameras/cam1722/snap_c1.jpg?1731510159148"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1722/snap_c1.jpg?1731510159148"
     },
     "30": {
         "lugar": "Lugar Desconhecido 30",
-        "url": "https://example.com/cameras/cam1721/snap_c1.jpg?1731510159148"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1721/snap_c1.jpg?1731510159148"
     },
     "31": {
         "lugar": "Lugar Desconhecido 31",
-        "url": "https://example.com/cameras/cam1719/snap_c1.jpg?1731510159148"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1719/snap_c1.jpg?1731510159148"
     },
     "32": {
         "lugar": "Lugar Desconhecido 32",
-        "url": "https://example.com/cameras/cam1718/snap_c1.jpg?1731510159148"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1718/snap_c1.jpg?1731510159148"
     },
     "33": {
         "lugar": "Lugar Desconhecido 33",
-        "url": "https://example.com/cameras/cam1705/snap_c1.jpg?1731510159150"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1705/snap_c1.jpg?1731510159150"
     },
     "34": {
         "lugar": "Lugar Desconhecido 34",
-        "url": "https://example.com/cameras/cam1704/snap_c1.jpg?1731510159150"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1704/snap_c1.jpg?1731510159150"
     },
     "35": {
         "lugar": "Lugar Desconhecido 35",
-        "url": "https://example.com/cameras/cam1703/snap_c1.jpg?1731510159151"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1703/snap_c1.jpg?1731510159151"
     },
     "36": {
         "lugar": "Lugar Desconhecido 36",
-        "url": "https://example.com/cameras/cam1702/snap_c1.jpg?1731510159151"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1702/snap_c1.jpg?1731510159151"
     },    "15": {
         "lugar": "Lugar Desconhecido 15",
-        "url": "https://example.com/cameras/cam1781/snap_c1.jpg?1731510159139"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1781/snap_c1.jpg?1731510159139"
     },
     "16": {
         "lugar": "Lugar Desconhecido 16",
-        "url": "https://example.com/cameras/cam1757/snap_c1.jpg?1731510159142"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1757/snap_c1.jpg?1731510159142"
     },
     "17": {
         "lugar": "Lugar Desconhecido 17",
-        "url": "https://example.com/cameras/cam1756/snap_c1.jpg?1731510159142"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1756/snap_c1.jpg?1731510159142"
     },
     "18": {
         "lugar": "Lugar Desconhecido 18",
-        "url": "https://example.com/cameras/cam1755/snap_c1.jpg?1731510159142"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1755/snap_c1.jpg?1731510159142"
     },
     "19": {
         "lugar": "Lugar Desconhecido 19",
-        "url": "https://example.com/cameras/cam1753/snap_c1.jpg?1731510159143"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1753/snap_c1.jpg?1731510159143"
     },
     "20": {
         "lugar": "Lugar Desconhecido 20",
-        "url": "https://example.com/cameras/cam1743/snap_c1.jpg?1731510159144"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1743/snap_c1.jpg?1731510159144"
     },
     "21": {
         "lugar": "Lugar Desconhecido 21",
-        "url": "https://example.com/cameras/cam1742/snap_c1.jpg?1731510159144"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1742/snap_c1.jpg?1731510159144"
     },
     "22": {
         "lugar": "Lugar Desconhecido 22",
-        "url": "https://example.com/cameras/cam1739/snap_c1.jpg?1731510159145"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1739/snap_c1.jpg?1731510159145"
     },
     "23": {
         "lugar": "Lugar Desconhecido 23",
-        "url": "https://example.com/cameras/cam1738/snap_c1.jpg?1731510159145"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1738/snap_c1.jpg?1731510159145"
     },
     "24": {
         "lugar": "Lugar Desconhecido 24",
-        "url": "https://example.com/cameras/cam1737/snap_c1.jpg?1731510159145"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1737/snap_c1.jpg?1731510159145"
     },
     "25": {
         "lugar": "Lugar Desconhecido 25",
-        "url": "https://example.com/cameras/cam1734/snap_c1.jpg?1731510159146"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1734/snap_c1.jpg?1731510159146"
     },
     
     "0": {
         "lugar": "Lugar Desconhecido 0",
-        "url": "https://example.com/cameras/cam1839/snap_c1.jpg?1731510159131"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1839/snap_c1.jpg?1731510159131"
     },
     "1": {
         "lugar": "Lugar Desconhecido 1",
-        "url": "https://example.com/cameras/cam1833/snap_c1.jpg?1731510159131"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1833/snap_c1.jpg?1731510159131"
     },
     "2": {
         "lugar": "Lugar Desconhecido 2",
-        "url": "https://example.com/cameras/cam1832/snap_c1.jpg?1731510159132"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1832/snap_c1.jpg?1731510159132"
     },
     "3": {
         "lugar": "Lugar Desconhecido 3",
-        "url": "https://example.com/cameras/cam1819/snap_c1.jpg?1731510159133"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1819/snap_c1.jpg?1731510159133"
     },
     "4": {
         "lugar": "Lugar Desconhecido 4",
-        "url": "https://example.com/cameras/cam1814/snap_c1.jpg?1731510159134"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1814/snap_c1.jpg?1731510159134"
     },
     "5": {
         "lugar": "Lugar Desconhecido 5",
-        "url": "https://example.com/cameras/cam1812/snap_c1.jpg?1731510159134"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1812/snap_c1.jpg?1731510159134"
     },
     "6": {
         "lugar": "Lugar Desconhecido 6",
-        "url": "https://example.com/cameras/cam1798/snap_c1.jpg?1731510159136"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1798/snap_c1.jpg?1731510159136"
     },
     "7": {
         "lugar": "Lugar Desconhecido 7",
-        "url": "https://example.com/cameras/cam1797/snap_c1.jpg?1731510159137"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1797/snap_c1.jpg?1731510159137"
     },
     "8": {
         "lugar": "Lugar Desconhecido 8",
-        "url": "https://example.com/cameras/cam1796/snap_c1.jpg?1731510159137"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1796/snap_c1.jpg?1731510159137"
     },
     "9": {
         "lugar": "Lugar Desconhecido 9",
-        "url": "https://example.com/cameras/cam1794/snap_c1.jpg?1731510159137"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1794/snap_c1.jpg?1731510159137"
     },
     "10": {
         "lugar": "Lugar Desconhecido 10",
-        "url": "https://example.com/cameras/cam1793/snap_c1.jpg?1731510159137"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1793/snap_c1.jpg?1731510159137"
     },
     "11": {
         "lugar": "Lugar Desconhecido 11",
-        "url": "https://example.com/cameras/cam1792/snap_c1.jpg?1731510159137"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1792/snap_c1.jpg?1731510159137"
     },
     "12": {
         "lugar": "Lugar Desconhecido 12",
-        "url": "https://example.com/cameras/cam1791/snap_c1.jpg?1731510159137"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1791/snap_c1.jpg?1731510159137"
     },
     "13": {
         "lugar": "Lugar Desconhecido 13",
-        "url": "https://example.com/cameras/cam1785/snap_c1.jpg?1731510159138"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1785/snap_c1.jpg?1731510159138"
     },
     "14": {
         "lugar": "Lugar Desconhecido 14",
-        "url": "https://example.com/cameras/cam1782/snap_c1.jpg?1731510159139"
+        "url": "https://egov.santos.sp.gov.br/santosmapeada/css/img/cameras/cam1782/snap_c1.jpg?1731510159139"
     }
 
         
