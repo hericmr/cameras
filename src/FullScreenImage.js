@@ -9,8 +9,8 @@ function FullScreenImage({ imageUrl, close }) {
             setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
         };
 
-        // Atualiza a imagem a cada 3 segundos
-        const interval = setInterval(updateImage, 100);
+       
+        const interval = setInterval(updateImage, 35);
         updateImage(); // Chama a função de atualização imediatamente ao montar o componente
 
         return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
