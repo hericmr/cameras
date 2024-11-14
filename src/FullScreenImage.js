@@ -10,7 +10,7 @@ function FullScreenImage({ imageUrl, close }) {
         };
 
        
-        const interval = setInterval(updateImage, 35);
+        const interval = setInterval(updateImage, 50);
         updateImage(); // Chama a função de atualização imediatamente ao montar o componente
 
         return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
