@@ -4,16 +4,21 @@ function FullScreenImage({ imageUrl, close }) {
     const [currentImageUrl, setCurrentImageUrl] = useState(imageUrl);
 
     useEffect(() => {
-        // Função para atualizar a URL da imagem com um timestamp
+        let animationFrameId;
+        let lastUpdate = Date.now();
+
         const updateImage = () => {
-            setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
+            const now = Date.now();
+            if (now - lastUpdate >= 100) { // Atualiza a cada 100ms
+                setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
+                lastUpdate = now;
+            }
+            animationFrameId = requestAnimationFrame(updateImage);
         };
 
-       
-        const interval = setInterval(updateImage, 50);
-        updateImage(); // Chama a função de atualização imediatamente ao montar o componente
+        updateImage();
 
-        return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+        return () => cancelAnimationFrame(animationFrameId);
     }, [imageUrl]);
 
     return (
