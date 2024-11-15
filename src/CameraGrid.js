@@ -4,23 +4,16 @@ import CameraCard from "./CameraCard";
 import cameras from "./cameras.json"; // Importa o arquivo JSON diretamente
 
 function CameraGrid({ onImageClick }) {
-  // Função para embaralhar a lista de câmeras
-  const shuffleArray = (array) => {
-    return array.sort(() => Math.random() - 0.5);
-  };
-
-  const [cameraUrls, setCameraUrls] = useState(shuffleArray(Object.values(cameras)));
+  const [cameraUrls, setCameraUrls] = useState(Object.values(cameras));
   const intervalRef = useRef(null);
 
-  // Função para atualizar apenas o campo de URL com o timestamp e embaralhar
+  // Função para atualizar apenas o campo de URL com o timestamp
   const updateImages = useCallback(() => {
     setCameraUrls((prevCameraUrls) =>
-      shuffleArray(
-        prevCameraUrls.map((camera) => ({
-          ...camera,
-          url: `${camera.url.split('&t=')[0]}&t=${new Date().getTime()}`, // Atualiza apenas a URL
-        }))
-      )
+      prevCameraUrls.map((camera) => ({
+        ...camera,
+        url: `${camera.url.split('&t=')[0]}&t=${new Date().getTime()}`, // Atualiza apenas a URL
+      }))
     );
   }, []);
 
