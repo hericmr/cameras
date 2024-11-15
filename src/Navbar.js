@@ -6,24 +6,20 @@ function Navbar() {
     return (
         <nav className="bg-black text-white py-0.5 shadow-lg">
             <div className="container mx-auto flex justify-between items-center px-4">
-                {/* Logotipo com filtro invertido aplicado em CSS inline */}
                 <a href="/" className="flex items-center space-x-2">
                     <img
                         src="https://github.com/hericmr/cameras/blob/main/public/logo.png?raw=true"
                         alt="Logo"
                         className="h-6 w-6"
-                        style={{ filter: "invert(1)" }} // Aplica a inversão de cores
+                        style={{ filter: "invert(1)" }}
                     />
-<span
-    className="text-base md:text-lg font-semibold hover:text-gray-200 transition duration-300 font-cyberpunk"
->
-    Cameras de Santos ao vivo
-</span>
-
-
+                    <span
+                        className="text-base md:text-lg font-semibold hover:text-gray-200 transition duration-300 font-cyberpunk"
+                    >
+                        Cameras de Santos ao vivo
+                    </span>
                 </a>
 
-                {/* Botão de menu para dispositivos móveis */}
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className="block md:hidden text-white hover:text-gray-300 focus:outline-none transition duration-150"
@@ -33,7 +29,6 @@ function Navbar() {
                     </svg>
                 </button>
 
-                {/* Menu de navegação */}
                 <div className={`md:flex space-x-3 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
                     <a href="/" className="block text-sm hover:text-gray-300 transition duration-150 md:inline">
                         Home
@@ -41,8 +36,8 @@ function Navbar() {
                     <a href="/about" className="block text-sm hover:text-gray-300 transition duration-150 md:inline">
                         Sobre
                     </a>
-                    <a href="/contact" className="block text-sm hover:text-gray-300 transition duration-150 md:inline">
-                        Contato
+                    <a href="/cameratest.html" className="block text-sm hover:text-gray-300 transition duration-150 md:inline">
+                        Cameratest
                     </a>
                 </div>
             </div>

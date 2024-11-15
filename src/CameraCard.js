@@ -23,9 +23,10 @@ function CameraCard({ camera, onImageClick }) {
                 onLoad={handleImageLoad}
                 loading="lazy"  // Habilita o lazy loading
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-opacity-10 bg-black text-white p-2 text-sm text-center">
+            {/* Removido o nome da câmera */}
+            {/* <div className="absolute bottom-0 left-0 right-0 bg-opacity-10 bg-black text-white p-2 text-sm text-center">
                 {camera.lugar}
-            </div>
+            </div> */}
         </div>
     );
 }
