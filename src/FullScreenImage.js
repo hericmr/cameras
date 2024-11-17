@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./FullScreenImage.css";
 
 function FullScreenImage({ imageUrl, close }) {
     const [currentImageUrl, setCurrentImageUrl] = useState(imageUrl);
@@ -10,7 +11,7 @@ function FullScreenImage({ imageUrl, close }) {
 
         const updateImage = () => {
             const now = Date.now();
-            if (now - lastUpdate >= 100) {
+            if (now - lastUpdate >= 50) {
                 setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
                 lastUpdate = now;
             }
@@ -33,11 +34,11 @@ function FullScreenImage({ imageUrl, close }) {
                     src={currentImageUrl}
                     alt="Imagem em tela cheia"
                     className={`w-full h-full object-contain transition-all ${
-                        isNightVision ? "filter hue-rotate-90 brightness-75" : ""
+                        isNightVision ? "night-vision" : ""
                     }`}
                 />
             </div>
-            <div className="absolute top-4 right-4 z-50">
+            <div className="absolute top-4 right-4 z-50 button-top">
                 <button
                     onClick={close}
                     className="bg-red-700 text-white text-sm p-2 rounded-full shadow-lg hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -45,7 +46,7 @@ function FullScreenImage({ imageUrl, close }) {
                     <span className="font-semibold">X</span>
                 </button>
             </div>
-            <div className="absolute top-4 left-4 z-50">
+            <div className="absolute top-4 left-4 z-50 button-top">
                 <button
                     onClick={toggleNightVision}
                     className="bg-yellow-500 text-black text-sm p-1 rounded-full shadow-lg hover:bg-yellow-600 focus:outline-none focus:ring-1 focus:ring-yellow-500"

@@ -1,0 +1,11 @@
+/* Estilo para visão noturna */
+.night-vision {
+    filter: contrast() brightness(1) hue-rotate(90deg) saturate(2);
+    background-color: #001a00; /* Simula o fundo em condições noturnas */
+    transition: filter 1.5s ease, background-color 1.5s ease;
+}
+
+/* Ajuste do botão */
+.button-top {
+    margin: 1rem;
+}
