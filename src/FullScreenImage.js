@@ -10,7 +10,7 @@ function FullScreenImage({ imageUrl, close }) {
 
         const updateImage = () => {
             const now = Date.now();
-            if (now - lastUpdate >= 2000) {
+            if (now - lastUpdate >= 1000) {
                 setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
                 lastUpdate = now;
             }
