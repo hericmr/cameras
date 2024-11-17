@@ -9,7 +9,7 @@ function FullScreenImage({ imageUrl, close }) {
 
         const updateImage = () => {
             const now = Date.now();
-            if (now - lastUpdate >= 100) { // Atualiza a cada 100ms
+            if (now - lastUpdate >= 200) { // Atualiza a cada 100ms
                 setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
                 lastUpdate = now;
             }
