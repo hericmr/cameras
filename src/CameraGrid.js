@@ -1,31 +1,29 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import CameraCard from "./CameraCard";
-import cameras from "./cameras.json"; // Importa o arquivo JSON diretamente
+import cameras from "./cameras.json";
 
-function CameraGrid({ onImageClick }) {
+function CameraGrid({ onImageClick, updateInterval = 6000 }) {
   const [cameraUrls, setCameraUrls] = useState(Object.values(cameras));
   const intervalRef = useRef(null);
 
-  // Função para atualizar apenas o campo de URL com o timestamp
+  // Atualiza URLs das imagens com timestamp
   const updateImages = useCallback(() => {
     setCameraUrls((prevCameraUrls) =>
       prevCameraUrls.map((camera) => ({
         ...camera,
-        url: `${camera.url.split('&t=')[0]}&t=${new Date().getTime()}`, // Atualiza apenas a URL
+        url: `${camera.url.split('&t=')[0]}&t=${new Date().getTime()}`,
       }))
     );
   }, []);
 
   useEffect(() => {
-    updateImages(); // Atualiza imediatamente ao montar
+    updateImages();
 
-    // Define o intervalo de atualização
-    intervalRef.current = setInterval(updateImages, 6000);
+    intervalRef.current = setInterval(updateImages, updateInterval);
 
-    // Limpa o intervalo ao desmontar o componente
     return () => clearInterval(intervalRef.current);
-  }, [updateImages]);
+  }, [updateImages, updateInterval]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
@@ -41,9 +39,9 @@ function CameraGrid({ onImageClick }) {
   );
 }
 
-// Definir PropTypes para garantir o tipo correto da prop onImageClick
 CameraGrid.propTypes = {
   onImageClick: PropTypes.func.isRequired,
+  updateInterval: PropTypes.number,
 };
 
 export default CameraGrid;

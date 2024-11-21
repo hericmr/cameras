@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 // URL da imagem de fallback
 const FALLBACK_IMAGE_URL = "URL_DE_FALLBACK"; // Substitua pelo caminho da imagem padrão
 
 function CameraCard({ camera, onImageClick }) {
-    const [imageUrl, setImageUrl] = useState(camera.url);
-
-    // Atualiza a URL da imagem para a de fallback caso ocorra um erro ao carregar
-    const handleImageError = () => setImageUrl(FALLBACK_IMAGE_URL);
-
     return (
         <div className="relative">
             <img
-                src={imageUrl}
-                alt={camera.lugar || "Imagem da câmera"} // Acessibilidade garantida
+                src={camera.url}
+                alt={camera.lugar || "Imagem da câmera"} // Texto alternativo acessível
                 className="w-full h-auto object-cover rounded cursor-pointer"
                 onClick={() => onImageClick(camera.url)}
-                onError={handleImageError}
-                loading="lazy" // Lazy loading para melhorar performance
+                onError={(e) => (e.target.src = FALLBACK_IMAGE_URL)} // Fallback no erro de carregamento
+                loading="lazy" // Lazy loading para performance
+                aria-label={`Clique para visualizar câmera em ${camera.lugar || "local desconhecido"}`}
             />
-            {/* Removido o overlay com o nome da câmera */}
         </div>
     );
 }
