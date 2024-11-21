@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import CameraGrid from './CameraGrid';
 import FullScreenImage from './FullScreenImage';
-
+import { UpdateProvider } from './UpdateContext'; // Importa o contexto de atualização
 
 function App() {
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -21,14 +21,16 @@ function App() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-grow">
-                <CameraGrid onImageClick={handleImageClick} />
-            </main>
-            {isFullScreen && <FullScreenImage imageUrl={currentImage} close={closeFullScreen} />}
-            <Footer />
-        </div>
+        <UpdateProvider>
+            <div className="min-h-screen flex flex-col">
+                <Navbar />
+                <main className="flex-grow">
+                    <CameraGrid onImageClick={handleImageClick} />
+                </main>
+                {isFullScreen && <FullScreenImage imageUrl={currentImage} close={closeFullScreen} />}
+                <Footer />
+            </div>
+        </UpdateProvider>
     );
 }
 

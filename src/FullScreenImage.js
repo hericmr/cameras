@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./FullScreenImage.css";
+import { useUpdate } from "./UpdateContext";
 
 function FullScreenImage({ imageUrl, close }) {
     const [currentImageUrl, setCurrentImageUrl] = useState(imageUrl);
+    const { setIsPaused } = useUpdate();
 
     useEffect(() => {
+        setIsPaused(true); // Pausa atualizações ao abrir
+
         let animationFrameId;
         let lastUpdate = Date.now();
 
@@ -19,8 +23,11 @@ function FullScreenImage({ imageUrl, close }) {
 
         updateImage();
 
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [imageUrl]);
+        return () => {
+            cancelAnimationFrame(animationFrameId);
+            setIsPaused(false); // Retoma atualizações ao fechar
+        };
+    }, [imageUrl, setIsPaused]);
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-90">
