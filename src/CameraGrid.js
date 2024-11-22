@@ -4,7 +4,7 @@ import CameraCard from "./CameraCard";
 import cameras from "./cameras.json";
 import { useUpdate } from "./UpdateContext"; // Importa o contexto de pausa
 
-function CameraGrid({ onImageClick, updateInterval = 12000 }) {
+function CameraGrid({ onImageClick, updateInterval = 2000 }) {
     const [cameraUrls, setCameraUrls] = useState(Object.values(cameras));
     const intervalRef = useRef(null);
     const { isPaused } = useUpdate(); // Obtém o estado global de pausa
