@@ -15,7 +15,7 @@ function Navbar({ onNavClick }) {
                             style={{ filter: "invert(1)" }}
                         />
                     <span
-                        className="text-xl sm:text-2xl md:text-4xl font-bold tracking-widest hover:text-gray-200 transition duration-300"
+                        className="text-sm sm:text-base md:text-2xl lg:text-4xl font-bold tracking-widest hover:text-gray-200 transition duration-300"
                         style={{ fontFamily: 'Press Start 2P, sans-serif' }}
                     >
                         Câmeras de Santos ao vivo
