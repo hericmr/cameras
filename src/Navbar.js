@@ -14,12 +14,13 @@ function Navbar({ onNavClick }) {
                             className="h-8 w-8"
                             style={{ filter: "invert(1)" }}
                         />
-                        <span
-                            className="text-2xl md:text-3xl font-bold tracking-widest hover:text-gray-200 transition duration-300"
-                            style={{ fontFamily: 'Press Start 2P, sans-serif' }}
-                        >
-                            Câmeras de Santos ao vivo
-                        </span>
+                    <span
+                        className="text-xl sm:text-2xl md:text-3xl font-bold tracking-widest hover:text-gray-200 transition duration-300"
+                        style={{ fontFamily: 'Press Start 2P, sans-serif' }}
+                    >
+                        Câmeras de Santos ao vivo
+                    </span>
+
                     </a>
 
                     <button
