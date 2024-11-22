@@ -7,21 +7,21 @@ function Navbar({ onNavClick }) {
         <>
             <nav className="bg-black text-white py-4 ">
                 <div className="container mx-auto flex justify-between items-center px-4">
-                    <a href="#" className="flex items-center space-x-2">
+                    <button href="#" className="flex items-center space-x-2">
                         <img
                             src="https://github.com/hericmr/cameras/blob/main/public/logo.png?raw=true"
                             alt="Logo"
                             className="h-8 w-8"
                             style={{ filter: "invert(1)" }}
                         />
-                    <span
+                    <h1
                         className="text-sm sm:text-base md:text-2xl lg:text-4xl font-bold tracking-widest hover:text-gray-200 transition duration-300"
                         style={{ fontFamily: 'Press Start 2P, sans-serif' }}
                     >
                         Câmeras de Santos ao vivo
-                    </span>
+                    </h1>
 
-                    </a>
+                    </button>
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -33,20 +33,20 @@ function Navbar({ onNavClick }) {
                     </button>
 
                     <div className={`md:flex space-x-6 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-                        <a
+                        <button
                             href="#"
                             className="block text-sm hover:text-gray-300 transition duration-150 transform hover:scale-105 md:inline"
                             onClick={() => onNavClick('home')}
                         >
                             Home
-                        </a>
-                        <a
+                        </button>
+                        <button
                             href="#"
                             className="block text-sm hover:text-gray-300 transition duration-150 transform hover:scale-105 md:inline"
                             onClick={() => onNavClick('about')}
                         >
                             Sobre o site
-                        </a>
+                        </button>
 
                     </div>
                 </div>
