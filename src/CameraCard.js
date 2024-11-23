@@ -27,7 +27,7 @@ function CameraCard({ camera, onImageClick }) {
     const interval = setInterval(() => {
       setRetryCount(0); // Reseta o contador de tentativas
       setImageSrc(camera.url + "?timestamp=" + Date.now()); // Adiciona timestamp para forçar o recarregamento
-    }, 2500);
+    }, 2000);
 
     // Limpa o intervalo ao desmontar o componente
     return () => clearInterval(interval);
@@ -43,7 +43,7 @@ function CameraCard({ camera, onImageClick }) {
       )}
 
       {/* Imagem com fallback e retentativa */}
-      <div className="w-full h-[210px] bg-gray-700 flex items-center justify-center overflow-hidden">
+      <div className="w-full h-[210px] bg-gray-900 flex items-center justify-center overflow-hidden">
         <img
           src={imageSrc}
           alt={camera.lugar || "Imagem da câmera"} // Texto alternativo
