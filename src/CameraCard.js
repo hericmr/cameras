@@ -27,7 +27,7 @@ function CameraCard({ camera, onImageClick }) {
     const interval = setInterval(() => {
       setRetryCount(0); // Reseta o contador de tentativas
       setImageSrc(camera.url + "?timestamp=" + Date.now()); // Adiciona timestamp para forçar o recarregamento
-    }, 2000);
+    }, 3000);
 
     // Limpa o intervalo ao desmontar o componente
     return () => clearInterval(interval);
