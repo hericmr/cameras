@@ -1,11 +1,8 @@
 // App.js
 import React, { useState } from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import CameraGrid from './CameraGrid';
-import FullScreenImage from './FullScreenImage';
-import About from './About'; // Importa o componente About
-import { UpdateProvider } from './UpdateContext'; // Importa o contexto de atualização
+import { Navbar, Footer, CameraGrid, FullScreenImage } from './components';
+import About from './pages/About';
+import { UpdateProvider } from './context/UpdateContext';
 
 function App() {
     const [isFullScreen, setIsFullScreen] = useState(false);

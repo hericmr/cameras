@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
-import CameraCard from "./CameraCard";
-import cameras from "./cameras.json";
-import { useUpdate } from "./UpdateContext"; // Importa o contexto de pausa
+import { CameraCard } from "./";
+import cameras from "../assets/cameras.json";
+import { useUpdate } from "../context/UpdateContext"; // Importa o contexto de pausa
 
 function CameraGrid({ onImageClick, updateInterval = 6000 }) {
     const [cameraUrls, setCameraUrls] = useState(Object.values(cameras));

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./FullScreenImage.css";
+import "../assets/FullScreenImage.css";
 
 function FullScreenImage({ imageUrl, close }) {
     const [currentImageUrl, setCurrentImageUrl] = useState(imageUrl);
