@@ -173,12 +173,12 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                 />
             </div>
 
-            {/* Vertical Menu */}
-            <div className="absolute right-0 top-0 h-full flex flex-col justify-center gap-2 p-4 z-[10000]">
-                <div className="bg-black/90 rounded-lg shadow-xl p-2 flex flex-col gap-2">
+            {/* Bottom Menu */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center p-2 z-[10000]">
+                <div className="bg-black/90 rounded-lg shadow-xl p-2 flex flex-row gap-1">
                     <button
                         onClick={handleDownload}
-                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-col items-center gap-1 group"
+                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group"
                         title="Baixar imagem"
                     >
                         <FaDownload className="text-white text-xl group-hover:text-gray-300" />
@@ -187,7 +187,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
                     <button
                         onClick={handleRefresh}
-                        className={`p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-col items-center gap-1 group ${
+                        className={`p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group ${
                             isLoading ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                         title="Atualizar imagem"
@@ -198,7 +198,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
                     <button
                         onClick={toggleFullscreen}
-                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-col items-center gap-1 group"
+                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group"
                         title={isFullscreen ? "Sair da tela cheia" : "Tela cheia"}
                     >
                         {isFullscreen ? (
@@ -213,7 +213,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
                     <button
                         onClick={() => setIsNightVision(!isNightVision)}
-                        className={`p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-col items-center gap-1 group ${
+                        className={`p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group ${
                             isNightVision ? 'bg-gray-800' : ''
                         }`}
                         title={isNightVision ? "Desativar visão noturna" : "Ativar visão noturna"}
@@ -226,7 +226,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
                     <button
                         onClick={close}
-                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-col items-center gap-1 group"
+                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group"
                         title="Fechar"
                     >
                         <FaTimes className="text-white text-xl group-hover:text-gray-300" />
