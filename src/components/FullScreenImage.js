@@ -40,7 +40,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
         const updateImage = () => {
             const now = Date.now();
-            if (now - lastUpdate >= 50) {
+            if (now - lastUpdate >= 1050) {
                 setCurrentImageUrl(`${imageUrl}&t=${new Date().getTime()}`);
                 lastUpdate = now;
             }
@@ -109,17 +109,6 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     </button>
                 )}
 
-                {/* Previous Camera Button (Simple) */}
-                {hasPrevious && (
-                    <button
-                        onClick={onPreviousCamera}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 p-4 rounded-r-lg bg-black/90 hover:bg-gray-900 transition-colors duration-200 flex items-center justify-center group z-[10000]"
-                        title="Câmera anterior"
-                    >
-                        <span className="text-white text-4xl font-bold group-hover:text-gray-300">&lt;</span>
-                    </button>
-                )}
-
                 {/* Next Camera Button */}
                 {hasNext && (
                     <button
@@ -129,17 +118,6 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     >
                         <FaChevronRight className="text-white text-3xl group-hover:text-gray-300" />
                         <span className="text-sm text-gray-500 group-hover:text-gray-400">Próxima</span>
-                    </button>
-                )}
-
-                {/* Next Camera Button (Simple) */}
-                {hasNext && (
-                    <button
-                        onClick={onNextCamera}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 p-4 rounded-l-lg bg-black/90 hover:bg-gray-900 transition-colors duration-200 flex items-center justify-center group z-[10000]"
-                        title="Próxima câmera"
-                    >
-                        <span className="text-white text-4xl font-bold group-hover:text-gray-300">&gt;</span>
                     </button>
                 )}
 
@@ -172,6 +150,17 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     onError={handleImageError}
                 />
             </div>
+
+            {/* Title */}
+            {title && (
+                <div className="absolute top-0 left-0 right-0 p-4 z-[10000] bg-gradient-to-b from-black/80 to-transparent">
+                    <div className="container mx-auto">
+                        <h1 className="text-white text-xl font-medium text-center">
+                            {title}
+                        </h1>
+                    </div>
+                </div>
+            )}
 
             {/* Bottom Menu */}
             <div className="absolute bottom-0 left-0 right-0 flex justify-center p-2 z-[10000]">
@@ -234,15 +223,6 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     </button>
                 </div>
             </div>
-
-            {/* Title */}
-            {title && (
-                <div className="absolute bottom-4 left-4 right-4 z-[10000] text-center">
-                    <div className="bg-black/90 text-gray-300 px-4 py-2 rounded-full inline-block">
-                        {title}
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

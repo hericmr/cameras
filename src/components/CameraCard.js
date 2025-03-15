@@ -6,7 +6,7 @@ import { FaEllipsisV, FaSync, FaMoon, FaExpand, FaInfoCircle } from 'react-icons
 const FALLBACK_IMAGE_URL =
   "https://github.com/hericmr/cameras/blob/main/public/logo.png?raw=true";
 
-function CameraCard({ camera, onImageClick }) {
+function CameraCard({ camera, onImageClick, index }) {
   const [imageSrc, setImageSrc] = useState(camera.url);
   const [prevImageSrc, setPrevImageSrc] = useState(camera.url); // Para crossfade
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -51,7 +51,7 @@ function CameraCard({ camera, onImageClick }) {
 
   const handleFullscreen = () => {
     setIsFullscreen(true);
-    onImageClick(camera.url);
+    onImageClick({ url: camera.url, title: camera.lugar }, index);
     setIsMenuOpen(false);
   };
 
@@ -68,7 +68,7 @@ function CameraCard({ camera, onImageClick }) {
       setTimeout(() => {
         setIsTransitioning(false);
       }, 1000);
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [camera.url, imageSrc]);
@@ -101,7 +101,7 @@ function CameraCard({ camera, onImageClick }) {
 
         {/* Menu Dropdown */}
         {isMenuOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl border border-gray-700 py-1 z-20">
+          <div className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-xl border border-gray-700 py-1 z-20">
             <button
               onClick={() => {
                 refreshImage();
@@ -144,7 +144,7 @@ function CameraCard({ camera, onImageClick }) {
       </div>
 
       {/* Imagem com fallback e retentativa */}
-      <div className="w-full h-[210px] bg-gray-900 flex items-center justify-center overflow-hidden relative">
+      <div className="w-full h-[300px] bg-gray-900 flex items-center justify-center overflow-hidden relative">
         {/* Imagem anterior para crossfade */}
         {isFullscreen && (
           <img
@@ -166,7 +166,7 @@ function CameraCard({ camera, onImageClick }) {
           } ${isTransitioning ? 'opacity-100' : 'opacity-100'} transition-opacity duration-1000 ${
             isNightVision ? "night-vision" : ""
           }`}
-          onClick={() => onImageClick(camera.url)}
+          onClick={() => onImageClick({ url: camera.url, title: camera.lugar }, index)}
           onError={handleError}
           loading="lazy"
           aria-label={`Clique para visualizar a câmera em ${camera.lugar || "local desconhecido"}`}
@@ -193,6 +193,7 @@ CameraCard.propTypes = {
     lugar: PropTypes.string,
   }).isRequired,
   onImageClick: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default CameraCard;

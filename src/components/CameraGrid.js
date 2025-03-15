@@ -31,10 +31,10 @@ function CameraGrid({ onImageClick, updateInterval = 6000 }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
             {cameraUrls.map((camera, index) => (
                 <MemoizedCameraCard
-                    key={camera.url} // Use URL as key for better reconciliation
+                    key={camera.url}
                     camera={camera}
+                    onImageClick={(data) => onImageClick(data, index)}
                     index={index}
-                    onImageClick={onImageClick}
                 />
             ))}
         </div>
