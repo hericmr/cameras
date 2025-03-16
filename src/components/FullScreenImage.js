@@ -94,45 +94,81 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         }
     };
 
+    // Handle swipe functionality for mobile
+    const touchStartX = useRef(null);
+    const touchEndX = useRef(null);
+    
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+    
+    const handleTouchMove = (e) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+    
+    const handleTouchEnd = () => {
+        if (!touchStartX.current || !touchEndX.current) return;
+        
+        const difference = touchStartX.current - touchEndX.current;
+        const minSwipeDistance = 50;
+        
+        if (difference > minSwipeDistance && hasNext) {
+            // Swipe left -> go to next
+            onNextCamera();
+        } else if (difference < -minSwipeDistance && hasPrevious) {
+            // Swipe right -> go to previous
+            onPreviousCamera();
+        }
+        
+        // Reset values
+        touchStartX.current = null;
+        touchEndX.current = null;
+    };
+
     return (
         <div className="fixed inset-0 bg-black bg-opacity-95 flex justify-center items-center z-[9999]">
-            <div className="relative w-full h-full flex items-center justify-center">
-                {/* Previous Camera Button */}
+            <div 
+                className="relative w-full h-full flex items-center justify-center"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
+                {/* Previous Camera Button - Improved for Mobile */}
                 {hasPrevious && (
                     <button
                         onClick={onPreviousCamera}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 p-6 rounded-full bg-black/90 hover:bg-gray-900 transition-colors duration-200 flex flex-col items-center gap-2 group z-[10000]"
+                        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-6 rounded-full bg-black/90 hover:bg-gray-900 transition-colors duration-200 flex flex-col items-center gap-1 md:gap-2 group z-[10000]"
                         title="Câmera anterior"
                     >
-                        <FaChevronLeft className="text-white text-3xl group-hover:text-gray-300" />
-                        <span className="text-sm text-gray-500 group-hover:text-gray-400">Anterior</span>
+                        <FaChevronLeft className="text-white text-xl md:text-3xl group-hover:text-gray-300" />
+                        <span className="text-xs md:text-sm text-gray-500 group-hover:text-gray-400 hidden md:block">Anterior</span>
                     </button>
                 )}
 
-                {/* Next Camera Button */}
+                {/* Next Camera Button - Improved for Mobile */}
                 {hasNext && (
                     <button
                         onClick={onNextCamera}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 p-6 rounded-full bg-black/90 hover:bg-gray-900 transition-colors duration-200 flex flex-col items-center gap-2 group z-[10000]"
+                        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-6 rounded-full bg-black/90 hover:bg-gray-900 transition-colors duration-200 flex flex-col items-center gap-1 md:gap-2 group z-[10000]"
                         title="Próxima câmera"
                     >
-                        <FaChevronRight className="text-white text-3xl group-hover:text-gray-300" />
-                        <span className="text-sm text-gray-500 group-hover:text-gray-400">Próxima</span>
+                        <FaChevronRight className="text-white text-xl md:text-3xl group-hover:text-gray-300" />
+                        <span className="text-xs md:text-sm text-gray-500 group-hover:text-gray-400 hidden md:block">Próxima</span>
                     </button>
                 )}
 
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[10001]">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+                        <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-t-2 border-b-2 border-white"></div>
                     </div>
                 )}
                 {error && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[10001]">
-                        <div className="text-red-500 text-center">
+                        <div className="text-red-500 text-center p-4">
                             <p>{error}</p>
                             <button
                                 onClick={handleRefresh}
-                                className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                                className="mt-2 px-3 py-1 md:px-4 md:py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700"
                             >
                                 Tentar Novamente
                             </button>
@@ -149,51 +185,58 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     onLoad={handleImageLoad}
                     onError={handleImageError}
                 />
+
+                {/* Touch navigation indicator - only on mobile */}
+                <div className="absolute bottom-24 left-0 right-0 flex justify-center pointer-events-none md:hidden">
+                    <div className="bg-black/50 text-white text-xs py-1 px-3 rounded-full">
+                        Deslize para navegar entre câmeras
+                    </div>
+                </div>
             </div>
 
             {/* Title */}
             {title && (
-                <div className="absolute top-0 left-0 right-0 p-4 z-[10000] bg-gradient-to-b from-black/80 to-transparent">
+                <div className="absolute top-0 left-0 right-0 p-2 md:p-4 z-[10000] bg-gradient-to-b from-black/80 to-transparent">
                     <div className="container mx-auto">
-                        <h1 className="text-white text-xl font-medium text-center">
+                        <h1 className="text-white text-lg md:text-xl font-medium text-center">
                             {title}
                         </h1>
                     </div>
                 </div>
             )}
 
-            {/* Bottom Menu */}
-            <div className="absolute bottom-0 left-0 right-0 flex justify-center p-2 z-[10000]">
-                <div className="bg-black/90 rounded-lg shadow-xl p-2 flex flex-row gap-1">
+            {/* Bottom Menu - Improved for mobile */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center p-1 md:p-2 z-[10000]">
+                <div className="bg-black/90 rounded-lg shadow-xl p-1 md:p-2 flex flex-row gap-1 overflow-x-auto max-w-full">
                     <button
                         onClick={handleDownload}
-                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group"
+                        className="p-1 md:p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-1 md:gap-2 group"
                         title="Baixar imagem"
                     >
-                        <FaDownload className="text-white text-xl group-hover:text-gray-300" />
+                        <FaDownload className="text-white text-lg md:text-xl group-hover:text-gray-300" />
                         <span className="text-xs text-gray-500 group-hover:text-gray-400">Baixar</span>
                     </button>
 
                     <button
                         onClick={handleRefresh}
-                        className={`p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group ${
+                        className={`p-1 md:p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-1 md:gap-2 group ${
                             isLoading ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                         title="Atualizar imagem"
                     >
-                        <FaSync className={`text-white text-xl group-hover:text-gray-300 ${isLoading ? 'animate-spin' : ''}`} />
+                        <FaSync className={`text-white text-lg md:text-xl group-hover:text-gray-300 ${isLoading ? 'animate-spin' : ''}`} />
                         <span className="text-xs text-gray-500 group-hover:text-gray-400">Atualizar</span>
                     </button>
 
                     <button
                         onClick={toggleFullscreen}
-                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group"
+                        className="p-1 md:p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-1 md:gap-2 group"
                         title={isFullscreen ? "Sair da tela cheia" : "Tela cheia"}
                     >
                         {isFullscreen ? (
-                            <FaCompress className="text-white text-xl group-hover:text-gray-300" />
+                            <FaCompress className="text-white text-lg md:text-xl group-hover:text-gray-300" />
                         ) : (
-                            <FaExpand className="text-white text-xl group-hover:text-gray-300" />
+                            <FaExpand className="text-white text-lg md:text-xl group-hover:text-gray-300" />
                         )}
                         <span className="text-xs text-gray-500 group-hover:text-gray-400">
                             {isFullscreen ? "Sair" : "Cheia"}
@@ -202,12 +245,12 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
                     <button
                         onClick={() => setIsNightVision(!isNightVision)}
-                        className={`p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group ${
+                        className={`p-1 md:p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-1 md:gap-2 group ${
                             isNightVision ? 'bg-gray-800' : ''
                         }`}
                         title={isNightVision ? "Desativar visão noturna" : "Ativar visão noturna"}
                     >
-                        <FaMoon className="text-white text-xl group-hover:text-gray-300" />
+                        <FaMoon className="text-white text-lg md:text-xl group-hover:text-gray-300" />
                         <span className="text-xs text-gray-500 group-hover:text-gray-400">
                             {isNightVision ? "Noite" : "Dia"}
                         </span>
@@ -215,10 +258,10 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
 
                     <button
                         onClick={close}
-                        className="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-2 group"
+                        className="p-1 md:p-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors duration-200 flex flex-row items-center gap-1 md:gap-2 group"
                         title="Fechar"
                     >
-                        <FaTimes className="text-white text-xl group-hover:text-gray-300" />
+                        <FaTimes className="text-white text-lg md:text-xl group-hover:text-gray-300" />
                         <span className="text-xs text-gray-500 group-hover:text-gray-400">Fechar</span>
                     </button>
                 </div>
