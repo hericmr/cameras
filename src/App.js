@@ -4,6 +4,7 @@ import { Navbar, Footer, CameraGrid, FullScreenImage } from './components';
 import About from './pages/About';
 import { UpdateProvider } from './context/UpdateContext';
 import cameras from './assets/cameras.json';
+import { formatCurrentDate } from './utils/dateFormatter';
 
 function App() {
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -57,9 +58,12 @@ function App() {
                         <div>
                             <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-b border-gray-800 py-4">
                                 <div className="container mx-auto px-4">
-                                    <div className="flex items-center justify-center space-x-3">
+                                    <div className="flex flex-col md:flex-row items-center justify-center space-y-1 md:space-y-0 md:space-x-3">
                                         <span className="text-gray-300 text-sm md:text-base">
-                                            Monitorando <strong className="text-white font-semibold">{camerasList.length} câmeras</strong> em tempo real
+                                            Mostrando <strong className="text-white font-semibold">{camerasList.length} câmeras</strong>
+                                        </span>
+                                        <span className="text-gray-400 text-xs md:text-sm">
+                                            - {formatCurrentDate()}
                                         </span>
                                     </div>
                                 </div>

@@ -1,9 +1,11 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaGlobe, FaVideo } from 'react-icons/fa';
 import cameras from '../assets/cameras.json';
+import { formatCurrentDate } from '../utils/dateFormatter';
 
 function About() {
     const totalCameras = Object.keys(cameras).length;
+    const currentDate = formatCurrentDate();
     const socialLinks = [
         {
             icon: <FaLinkedin className="w-6 h-6" />,
@@ -47,6 +49,7 @@ function About() {
                                 <div className="text-center">
                                     <div className="text-4xl font-bold text-white">{totalCameras}</div>
                                     <div className="text-sm text-gray-300 mt-1">Câmeras Disponíveis</div>
+                                    <div className="text-xs text-gray-400 mt-2">{currentDate}</div>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +59,7 @@ function About() {
                                 Este site oferece uma visão ao vivo das câmeras de segurança da cidade de Santos, 
                                 permitindo acompanhar condições de tráfego, clima e segurança pública em diferentes áreas. 
                                 Desenvolvido para ser simples, acessível e eficiente, ele proporciona uma navegação 
-                                intuitiva entre diversos pontos da cidade. Atualmente, o sistema monitora <strong className="text-white">{totalCameras} câmeras</strong> em tempo real.
+                                intuitiva entre diversos pontos da cidade. Atualmente, o sistema monitora <strong className="text-white">{totalCameras} câmeras</strong> em tempo real ({currentDate}).
                             </p>
 
                             <div className="bg-gray-800 p-4 rounded-lg my-6 border border-gray-700">
