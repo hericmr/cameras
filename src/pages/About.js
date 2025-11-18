@@ -1,7 +1,9 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaGlobe, FaVideo } from 'react-icons/fa';
+import cameras from '../assets/cameras.json';
 
 function About() {
+    const totalCameras = Object.keys(cameras).length;
     const socialLinks = [
         {
             icon: <FaLinkedin className="w-6 h-6" />,
@@ -38,12 +40,23 @@ function About() {
                     </h1>
 
                     <div className="space-y-6 text-gray-300">
+                        {/* Estatísticas */}
+                        <div className="bg-gradient-to-r from-blue-900/50 to-purple-900/50 p-6 rounded-lg border border-gray-700 mb-6">
+                            <div className="flex items-center justify-center space-x-4">
+                                <FaVideo className="text-blue-400 text-3xl" />
+                                <div className="text-center">
+                                    <div className="text-4xl font-bold text-white">{totalCameras}</div>
+                                    <div className="text-sm text-gray-300 mt-1">Câmeras Disponíveis</div>
+                                </div>
+                            </div>
+                        </div>
+
                         <section className="prose prose-invert max-w-none">
                             <p className="text-lg leading-relaxed">
                                 Este site oferece uma visão ao vivo das câmeras de segurança da cidade de Santos, 
                                 permitindo acompanhar condições de tráfego, clima e segurança pública em diferentes áreas. 
                                 Desenvolvido para ser simples, acessível e eficiente, ele proporciona uma navegação 
-                                intuitiva entre diversos pontos da cidade.
+                                intuitiva entre diversos pontos da cidade. Atualmente, o sistema monitora <strong className="text-white">{totalCameras} câmeras</strong> em tempo real.
                             </p>
 
                             <div className="bg-gray-800 p-4 rounded-lg my-6 border border-gray-700">

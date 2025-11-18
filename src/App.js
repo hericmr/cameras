@@ -53,7 +53,20 @@ function App() {
                 <Navbar onNavClick={handleNavClick} />
                 <main className="flex-grow">
                     {/* Exibe o conteúdo baseado na página atual */}
-                    {currentPage === 'home' && <CameraGrid onImageClick={handleImageClick} />}
+                    {currentPage === 'home' && (
+                        <div>
+                            <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-b border-gray-800 py-4">
+                                <div className="container mx-auto px-4">
+                                    <div className="flex items-center justify-center space-x-3">
+                                        <span className="text-gray-300 text-sm md:text-base">
+                                            Monitorando <strong className="text-white font-semibold">{camerasList.length} câmeras</strong> em tempo real
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <CameraGrid onImageClick={handleImageClick} />
+                        </div>
+                    )}
                     {currentPage === 'about' && <About />} {/* Aqui é onde o About é renderizado */}
                     {currentPage === 'contact' && <div className="p-4">Contato</div>}
                 </main>
