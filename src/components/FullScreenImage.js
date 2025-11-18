@@ -1,19 +1,22 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
-import { FaTimes, FaMoon, FaExpand, FaCompress, FaSync, FaDownload, FaChevronLeft, FaChevronRight, FaInfoCircle } from 'react-icons/fa';
+import { FaTimes, FaSync, FaChevronLeft, FaChevronRight, FaInfoCircle } from 'react-icons/fa';
 import "../assets/FullScreenImage.css";
 import { useUpdate } from "../context/UpdateContext";
 import { CameraDetails } from "./CameraDetails";
 
-function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamera, hasPrevious, hasNext }) {
+// URLs de fallback
+const LOADING_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23000000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='system-ui' font-size='18'%3ECarregando...%3C/text%3E%3C/svg%3E";
+const ERROR_IMAGE_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23000000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ef4444' font-family='system-ui' font-size='18'%3EErro ao carregar imagem%3C/text%3E%3C/svg%3E";
+
+function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamera, hasPrevious, hasNext, cameraData }) {
     // Estados
     const [state, setState] = useState({
-        currentImageUrl: imageUrl,
-        isNightVision: false,
-        isLoading: false,
+        currentImageUrl: LOADING_PLACEHOLDER, // Começa com placeholder de loading (igual ao site oficial)
+        isLoading: true,
         error: null,
-        isFullscreen: false,
-        showDetails: false
+        showDetails: false,
+        hasLoadedOnce: false // Flag para primeira carga (igual ao site oficial: carregou)
     });
     
     // Refs
@@ -23,7 +26,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
     const touchEndX = useRef(null);
     const { setIsPaused } = useUpdate(); // Get pause control from context
     
-    const { currentImageUrl, isNightVision, isLoading, error, isFullscreen, showDetails } = state;
+    const { currentImageUrl, isLoading, error, showDetails, hasLoadedOnce } = state;
     
     // Pause other camera updates when fullscreen opens, resume when it closes
     useEffect(() => {
@@ -34,34 +37,40 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         };
     }, [setIsPaused]);
     
+    // Função auxiliar para extrair a URL base (sem query parameters)
+    const getBaseUrl = useCallback((url) => {
+        // Remove qualquer query string existente (incluindo ?t=, &t=, etc)
+        return url.split('?')[0];
+    }, []);
+
     // Funções auxiliares
     const updateUrlWithTimestamp = useCallback(() => {
-        return `${imageUrl}&t=${new Date().getTime()}`;
-    }, [imageUrl]);
+        const baseUrl = getBaseUrl(imageUrl);
+        return `${baseUrl}?t=${new Date().getTime()}`;
+    }, [imageUrl, getBaseUrl]);
     
     const setStateValue = useCallback((key, value) => {
         setState(prevState => ({ ...prevState, [key]: value }));
     }, []);
     
     // Handlers
-    const toggleFullscreen = useCallback(() => {
-        if (!document.fullscreenElement) {
-            imageRef.current?.parentElement?.requestFullscreen();
-            setStateValue('isFullscreen', true);
-        } else {
-            document.exitFullscreen();
-            setStateValue('isFullscreen', false);
-        }
-    }, [setStateValue]);
-    
     const handleImageLoad = useCallback(() => {
         setStateValue('isLoading', false);
         setStateValue('error', null);
-    }, [setStateValue]);
+        if (!hasLoadedOnce) {
+            setStateValue('hasLoadedOnce', true); // Marca que já carregou (igual ao site oficial: carregou = true)
+        }
+    }, [setStateValue, hasLoadedOnce]);
     
-    const handleImageError = useCallback(() => {
+    const handleImageError = useCallback((e) => {
         setStateValue('isLoading', false);
         setStateValue('error', 'Erro ao carregar a imagem');
+        // Previne loop infinito de erros (igual ao site oficial: this.onerror=null)
+        if (e.target) {
+            e.target.onerror = null;
+            // Define imagem de erro padrão (igual ao site oficial: erro_camera.png)
+            e.target.src = ERROR_IMAGE_URL;
+        }
     }, [setStateValue]);
     
     const handleRefresh = useCallback(() => {
@@ -77,30 +86,9 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         }, 1000);
     }, [setStateValue, updateUrlWithTimestamp]);
     
-    const toggleNightVision = useCallback(() => {
-        setStateValue('isNightVision', !isNightVision);
-    }, [isNightVision, setStateValue]);
-    
     const toggleDetails = useCallback(() => {
         setStateValue('showDetails', !showDetails);
     }, [showDetails, setStateValue]);
-    
-    const handleDownload = useCallback(async () => {
-        try {
-            const response = await fetch(currentImageUrl);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `camera-${Date.now()}.jpg`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-        } catch (err) {
-            setStateValue('error', 'Erro ao baixar a imagem');
-        }
-    }, [currentImageUrl, setStateValue]);
     
     // Funções de toque para navegação em dispositivos móveis
     const handleTouchStart = useCallback((e) => {
@@ -127,39 +115,37 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         touchEndX.current = null;
     }, [hasPrevious, hasNext, onNextCamera, onPreviousCamera]);
     
-    // Efeitos
+    // Efeito para atualizar a imagem periodicamente (igual ao site oficial - setInterval de 6 segundos)
     useEffect(() => {
-        const handleFullscreenChange = () => {
-            setStateValue('isFullscreen', !!document.fullscreenElement);
-        };
+        // Primeira carga: carrega a URL inicial (igual ao site oficial quando carregou = false)
+        setStateValue('hasLoadedOnce', false);
+        setStateValue('isLoading', true);
+        setStateValue('currentImageUrl', updateUrlWithTimestamp());
 
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-        return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    }, [setStateValue]);
-    
-    // Efeito para atualizar a imagem periodicamente
-    useEffect(() => {
-        let animationFrameId;
-        let lastUpdate = Date.now();
-
-        const updateImage = () => {
-            const now = Date.now();
-            if (now - lastUpdate >= 1050) {
-                setStateValue('currentImageUrl', updateUrlWithTimestamp());
-                lastUpdate = now;
-            }
-            animationFrameId = requestAnimationFrame(updateImage);
-        };
-
-        updateImage();
+        // Configura intervalo de atualização (6 segundos como no site oficial)
+        const intervalId = setInterval(() => {
+            // Verifica se já carregou antes de atualizar (igual ao site oficial quando carregou = true)
+            setState(prevState => {
+                if (prevState.hasLoadedOnce) {
+                    const d = new Date();
+                    const baseUrl = getBaseUrl(imageUrl);
+                    // Apenas atualiza o timestamp (igual ao site oficial quando carregou = true)
+                    return {
+                        ...prevState,
+                        currentImageUrl: `${baseUrl}?t=${d.getTime()}`
+                    };
+                }
+                return prevState;
+            });
+        }, 6000);
 
         return () => {
-            cancelAnimationFrame(animationFrameId);
+            clearInterval(intervalId);
             if (updateTimeoutRef.current) {
                 clearTimeout(updateTimeoutRef.current);
             }
         };
-    }, [imageUrl, setStateValue, updateUrlWithTimestamp]);
+    }, [imageUrl, setStateValue, updateUrlWithTimestamp, getBaseUrl]);
     
     // Componentes UI
     const renderNavigationButtons = () => (
@@ -192,36 +178,11 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         <div className="absolute bottom-0 left-0 right-0 flex justify-center p-1 md:p-2 z-[10000]">
             <div className="bg-black/90 rounded-lg shadow-xl p-1 md:p-2 flex flex-row gap-1 overflow-x-auto max-w-full">
                 <ActionButton
-                    onClick={handleDownload}
-                    title="Baixar imagem"
-                    icon={<FaDownload className="text-white text-lg md:text-xl group-hover:text-gray-300" />}
-                    label="Baixar"
-                />
-
-                <ActionButton
                     onClick={handleRefresh}
                     title="Atualizar imagem"
                     icon={<FaSync className={`text-white text-lg md:text-xl group-hover:text-gray-300 ${isLoading ? 'animate-spin' : ''}`} />}
                     label="Atualizar"
                     disabled={isLoading}
-                />
-
-                <ActionButton
-                    onClick={toggleFullscreen}
-                    title={isFullscreen ? "Sair da tela cheia" : "Tela cheia"}
-                    icon={isFullscreen ? 
-                        <FaCompress className="text-white text-lg md:text-xl group-hover:text-gray-300" /> : 
-                        <FaExpand className="text-white text-lg md:text-xl group-hover:text-gray-300" />
-                    }
-                    label={isFullscreen ? "Sair" : "Cheia"}
-                />
-
-                <ActionButton
-                    onClick={toggleNightVision}
-                    title={isNightVision ? "Desativar visão noturna" : "Ativar visão noturna"}
-                    icon={<FaMoon className="text-white text-lg md:text-xl group-hover:text-gray-300" />}
-                    label={isNightVision ? "Noite" : "Dia"}
-                    active={isNightVision}
                 />
 
                 <ActionButton
@@ -291,9 +252,10 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     ref={imageRef}
                     src={currentImageUrl}
                     alt={title || "Imagem em tela cheia"}
-                    className={`w-full h-full object-contain transition-all duration-300 ${isNightVision ? "night-vision" : ""}`}
+                    className="w-full h-full object-contain transition-all duration-300"
                     onLoad={handleImageLoad}
                     onError={handleImageError}
+                    loading="eager"
                 />
 
                 {/* Indicador de navegação por toque - apenas em dispositivos móveis */}
@@ -318,8 +280,9 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
             {renderBottomMenu()}
             
             {/* Camera Details Modal */}
-            {showDetails && (
+            {showDetails && cameraData && (
                 <CameraDetails
+                    cameraData={cameraData}
                     imageUrl={currentImageUrl}
                     onClose={() => setStateValue('showDetails', false)}
                 />
@@ -335,7 +298,8 @@ FullScreenImage.propTypes = {
     onPreviousCamera: PropTypes.func,
     onNextCamera: PropTypes.func,
     hasPrevious: PropTypes.bool,
-    hasNext: PropTypes.bool
+    hasNext: PropTypes.bool,
+    cameraData: PropTypes.object
 };
 
 export default FullScreenImage;

@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 import { FaTimes, FaMapMarkerAlt, FaCalendarAlt, FaBuilding, FaVideo, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { getCameraDataByUrl } from '../utils/csvParser';
 
-function CameraDetails({ imageUrl, onClose }) {
-  const [cameraData, setCameraData] = useState(null);
-  const [loading, setLoading] = useState(true);
+function CameraDetails({ imageUrl, onClose, cameraData: providedCameraData }) {
+  const [cameraData, setCameraData] = useState(providedCameraData || null);
+  const [loading, setLoading] = useState(!providedCameraData);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Se os dados já foram fornecidos, não precisa buscar
+    if (providedCameraData) {
+      setCameraData(providedCameraData);
+      setLoading(false);
+      return;
+    }
+
+    // Caso contrário, busca do CSV como fallback
     const loadData = async () => {
       try {
         setLoading(true);
@@ -28,7 +36,7 @@ function CameraDetails({ imageUrl, onClose }) {
     };
 
     loadData();
-  }, [imageUrl]);
+  }, [imageUrl, providedCameraData]);
 
   const formatDate = (dateString) => {
     if (!dateString) return 'Não informado';
@@ -267,6 +275,7 @@ function CameraDetails({ imageUrl, onClose }) {
 CameraDetails.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  cameraData: PropTypes.object,
 };
 
 export { CameraDetails };
