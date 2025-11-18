@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { Navbar, Footer, CameraGrid, FullScreenImage } from './components';
 import About from './pages/About';
 import { UpdateProvider } from './context/UpdateContext';
-import cameras from './assets/cameras.json';
+import cameras from './assets/cameras_detailed.json';
 import { formatCurrentDate } from './utils/dateFormatter';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
         const newIndex = currentCameraIndex - 1;
         const camera = camerasList[newIndex];
         setCurrentImage(camera.url);
-        setCurrentImageTitle(camera.lugar);
+        setCurrentImageTitle(camera.neighborhood || camera.street || camera.camera_number || "Câmera");
         setCurrentCameraIndex(newIndex);
     };
 
@@ -34,7 +34,7 @@ function App() {
         const newIndex = currentCameraIndex + 1;
         const camera = camerasList[newIndex];
         setCurrentImage(camera.url);
-        setCurrentImageTitle(camera.lugar);
+        setCurrentImageTitle(camera.neighborhood || camera.street || camera.camera_number || "Câmera");
         setCurrentCameraIndex(newIndex);
     };
 

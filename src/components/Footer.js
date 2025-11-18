@@ -1,7 +1,7 @@
 // Footer.js
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaCode, FaVideo } from 'react-icons/fa';
-import cameras from '../assets/cameras.json';
+import cameras from '../assets/cameras_detailed.json';
 import { formatCurrentDateShort } from '../utils/dateFormatter';
 
 function Footer() {

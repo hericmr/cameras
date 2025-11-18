@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
-import { FaTimes, FaMoon, FaExpand, FaCompress, FaSync, FaDownload, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaTimes, FaMoon, FaExpand, FaCompress, FaSync, FaDownload, FaChevronLeft, FaChevronRight, FaInfoCircle } from 'react-icons/fa';
 import "../assets/FullScreenImage.css";
+import { useUpdate } from "../context/UpdateContext";
+import { CameraDetails } from "./CameraDetails";
 
 function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamera, hasPrevious, hasNext }) {
     // Estados
@@ -10,7 +12,8 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         isNightVision: false,
         isLoading: false,
         error: null,
-        isFullscreen: false
+        isFullscreen: false,
+        showDetails: false
     });
     
     // Refs
@@ -18,8 +21,18 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
     const updateTimeoutRef = useRef(null);
     const touchStartX = useRef(null);
     const touchEndX = useRef(null);
+    const { setIsPaused } = useUpdate(); // Get pause control from context
     
-    const { currentImageUrl, isNightVision, isLoading, error, isFullscreen } = state;
+    const { currentImageUrl, isNightVision, isLoading, error, isFullscreen, showDetails } = state;
+    
+    // Pause other camera updates when fullscreen opens, resume when it closes
+    useEffect(() => {
+        setIsPaused(true); // Pause all other cameras when fullscreen opens
+        
+        return () => {
+            setIsPaused(false); // Resume updates when fullscreen closes
+        };
+    }, [setIsPaused]);
     
     // Funções auxiliares
     const updateUrlWithTimestamp = useCallback(() => {
@@ -67,6 +80,10 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
     const toggleNightVision = useCallback(() => {
         setStateValue('isNightVision', !isNightVision);
     }, [isNightVision, setStateValue]);
+    
+    const toggleDetails = useCallback(() => {
+        setStateValue('showDetails', !showDetails);
+    }, [showDetails, setStateValue]);
     
     const handleDownload = useCallback(async () => {
         try {
@@ -208,6 +225,14 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                 />
 
                 <ActionButton
+                    onClick={toggleDetails}
+                    title="Ver informações da câmera"
+                    icon={<FaInfoCircle className="text-white text-lg md:text-xl group-hover:text-gray-300" />}
+                    label="Info"
+                    active={showDetails}
+                />
+
+                <ActionButton
                     onClick={close}
                     title="Fechar"
                     icon={<FaTimes className="text-white text-lg md:text-xl group-hover:text-gray-300" />}
@@ -291,6 +316,14 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
             )}
 
             {renderBottomMenu()}
+            
+            {/* Camera Details Modal */}
+            {showDetails && (
+                <CameraDetails
+                    imageUrl={currentImageUrl}
+                    onClose={() => setStateValue('showDetails', false)}
+                />
+            )}
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import { CameraCard } from "./";
-import cameras from "../assets/cameras.json";
+import cameras from "../assets/cameras_detailed.json";
 import { useUpdate } from "../context/UpdateContext"; // Importa o contexto de pausa
 
 // Memoize the CameraCard component to prevent unnecessary re-renders

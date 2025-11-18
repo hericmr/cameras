@@ -1,4 +1,4 @@
-import cameras from '../../../assets/cameras.json';
+import cameras from '../../../assets/cameras_detailed.json';
 import { Camera } from '../types';
 
 export const cameraService = {

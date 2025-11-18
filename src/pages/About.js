@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaGlobe, FaVideo } from 'react-icons/fa';
-import cameras from '../assets/cameras.json';
+import cameras from '../assets/cameras_detailed.json';
 import { formatCurrentDate } from '../utils/dateFormatter';
 
 function About() {

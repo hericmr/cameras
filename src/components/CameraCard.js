@@ -1,22 +1,68 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { FaEllipsisV, FaSync, FaMoon, FaExpand, FaInfoCircle } from 'react-icons/fa';
+import { FaEllipsisV, FaSync, FaMoon, FaExpand, FaInfoCircle, FaMapMarkerAlt, FaRoad } from 'react-icons/fa';
+import { useUpdate } from "../context/UpdateContext";
 
 // URL de fallback para imagem
 const FALLBACK_IMAGE_URL =
   "https://github.com/hericmr/cameras/blob/main/public/logo.png?raw=true";
 
 function CameraCard({ camera, onImageClick, index }) {
-  const [imageSrc, setImageSrc] = useState(camera.url);
-  const [prevImageSrc, setPrevImageSrc] = useState(camera.url); // Para crossfade
+  const [imageSrc, setImageSrc] = useState(null); // Start with null to prevent initial load
+  const [prevImageSrc, setPrevImageSrc] = useState(null); // Para crossfade
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNightVision, setIsNightVision] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false); // Track visibility
   const menuRef = useRef(null);
+  const cardRef = useRef(null); // Ref for Intersection Observer
+  const imageLoadedRef = useRef(false); // Track if image has been loaded initially
   const MAX_RETRIES = 150; // Número máximo de tentativas
+  const { isPaused } = useUpdate(); // Get pause state from context
+
+  // Intersection Observer para detectar quando o card está visível
+  useEffect(() => {
+    // Don't observe if updates are paused (fullscreen is open)
+    if (isPaused) {
+      setIsVisible(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isPaused) {
+            setIsVisible(true);
+            // Inicia o carregamento da imagem quando visível (apenas uma vez)
+            if (!imageLoadedRef.current) {
+              imageLoadedRef.current = true;
+              setImageSrc(camera.url);
+              setPrevImageSrc(camera.url);
+            }
+          } else {
+            setIsVisible(false);
+          }
+        });
+      },
+      {
+        rootMargin: '50px', // Começa a carregar 50px antes de entrar na viewport
+        threshold: 0.01, // Dispara quando pelo menos 1% está visível
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [camera.url, isPaused]); // Include isPaused in dependencies
 
   // Fechar menu ao clicar fora
   useEffect(() => {
@@ -51,12 +97,14 @@ function CameraCard({ camera, onImageClick, index }) {
 
   const handleFullscreen = () => {
     setIsFullscreen(true);
-    onImageClick({ url: camera.url, title: camera.lugar }, index);
+    onImageClick({ url: camera.url, title: camera.neighborhood || camera.street || camera.camera_number || "Câmera" }, index);
     setIsMenuOpen(false);
   };
 
-  // Atualiza a imagem a cada 2 segundos com crossfade
+  // Atualiza a imagem a cada 4 segundos com crossfade, apenas se visível e não pausado
   useEffect(() => {
+    if (!isVisible || !imageSrc || isPaused) return; // Não atualiza se não estiver visível, imagem não carregada, ou pausado
+
     const interval = setInterval(() => {
       setRetryCount(0);
       setPrevImageSrc(imageSrc);
@@ -71,15 +119,15 @@ function CameraCard({ camera, onImageClick, index }) {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [camera.url, imageSrc]);
+  }, [camera.url, imageSrc, isVisible, isPaused]);
 
   return (
-    <div className={`relative border border-gray-800 shadow-lg rounded-lg overflow-hidden bg-gray-900 ${isFullscreen ? 'hidden' : ''}`}>
+    <div ref={cardRef} className={`relative border border-gray-800 shadow-lg rounded-lg overflow-hidden bg-gray-900 ${isFullscreen ? 'hidden' : ''}`}>
       {/* Status Badges */}
       <div className="absolute top-2 left-2 z-10 flex gap-2">
-        {camera.lugar === "quebrada" && (
+        {camera.status && camera.status !== "Em Funcionamento" && (
           <div className="bg-yellow-500 text-black text-xs px-2 py-1 rounded-full font-medium">
-            Câmera Quebrada
+            Câmera com Problemas
           </div>
         )}
         {isLoading && (
@@ -145,8 +193,14 @@ function CameraCard({ camera, onImageClick, index }) {
 
       {/* Imagem com fallback e retentativa */}
       <div className="w-full h-[300px] bg-gray-900 flex items-center justify-center overflow-hidden relative">
+        {/* Placeholder enquanto não está visível ou carregando */}
+        {!imageSrc && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+            <span className="text-gray-400 text-sm">Carregando...</span>
+          </div>
+        )}
         {/* Imagem anterior para crossfade */}
-        {isFullscreen && (
+        {isFullscreen && prevImageSrc && (
           <img
             src={prevImageSrc}
             alt=""
@@ -157,20 +211,22 @@ function CameraCard({ camera, onImageClick, index }) {
             }`}
           />
         )}
-        {/* Imagem atual */}
-        <img
-          src={imageSrc}
-          alt={camera.lugar || "Imagem da câmera"}
-          className={`w-full h-full object-cover cursor-pointer ${
-            isFullscreen ? 'absolute inset-0' : ''
-          } ${isTransitioning ? 'opacity-100' : 'opacity-100'} transition-opacity duration-1000 ${
-            isNightVision ? "night-vision" : ""
-          }`}
-          onClick={() => onImageClick({ url: camera.url, title: camera.lugar }, index)}
-          onError={handleError}
-          loading="lazy"
-          aria-label={`Clique para visualizar a câmera em ${camera.lugar || "local desconhecido"}`}
-        />
+        {/* Imagem atual - só renderiza se imageSrc estiver definido */}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={camera.neighborhood || camera.street || "Imagem da câmera"}
+            className={`w-full h-full object-cover cursor-pointer ${
+              isFullscreen ? 'absolute inset-0' : ''
+            } ${isTransitioning ? 'opacity-100' : 'opacity-100'} transition-opacity duration-1000 ${
+              isNightVision ? "night-vision" : ""
+            }`}
+            onClick={() => onImageClick({ url: camera.url, title: camera.neighborhood || camera.street || camera.camera_number || "Câmera" }, index)}
+            onError={handleError}
+            loading="lazy"
+            aria-label={`Clique para visualizar a câmera ${camera.camera_number || "desconhecida"}`}
+          />
+        )}
         {/* Placeholder no caso de erro após tentativas */}
         {imageSrc === FALLBACK_IMAGE_URL && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
@@ -180,8 +236,23 @@ function CameraCard({ camera, onImageClick, index }) {
       </div>
 
       {/* Informações abaixo da imagem */}
-      <div className="p-2 bg-gray-800 text-gray-300 text-xs text-center border-t border-gray-700">
-        {camera.lugar || "Local Desconhecido"}
+      <div className="p-3 bg-gray-800 text-gray-300 border-t border-gray-700">
+        {/* Detailed Information */}
+        {camera.neighborhood && (
+          <div className="text-sm font-semibold text-white mb-1 text-center flex items-center justify-center gap-1">
+            <FaMapMarkerAlt className="text-blue-400" />
+            {camera.neighborhood}
+          </div>
+        )}
+        
+        {camera.street && (
+          <div className="text-xs text-gray-400 mb-1 text-center truncate flex items-center justify-center gap-1" title={camera.street}>
+            <FaRoad className="text-gray-500" />
+            {camera.street}
+            {camera.intersection && ` × ${camera.intersection}`}
+          </div>
+        )}
+        
       </div>
     </div>
   );
@@ -189,8 +260,14 @@ function CameraCard({ camera, onImageClick, index }) {
 
 CameraCard.propTypes = {
   camera: PropTypes.shape({
+    id: PropTypes.string,
     url: PropTypes.string.isRequired,
-    lugar: PropTypes.string,
+    camera_number: PropTypes.string,
+    neighborhood: PropTypes.string,
+    street: PropTypes.string,
+    intersection: PropTypes.string,
+    camera_type: PropTypes.string,
+    status: PropTypes.string,
   }).isRequired,
   onImageClick: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
