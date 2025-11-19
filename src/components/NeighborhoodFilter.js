@@ -229,3 +229,4 @@ NeighborhoodFilter.propTypes = {
 
 export default NeighborhoodFilter;
 
+

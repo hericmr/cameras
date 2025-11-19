@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaBars, FaTimes } from 'react-icons/fa';
 
 function Navbar({ onNavClick }) {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -41,20 +44,34 @@ function Navbar({ onNavClick }) {
                 {/* Menu Desktop */}
                 <div className="hidden md:flex items-center space-x-6">
                     <button
-                        onClick={() => onNavClick('home')}
-                        className="flex items-center space-x-2 text-white hover:text-gray-200 transition-all duration-200 relative group"
+                        onClick={() => {
+                            navigate('/');
+                            onNavClick('home');
+                        }}
+                        className={`flex items-center space-x-2 transition-all duration-200 relative group ${
+                            location.pathname === '/' ? 'text-white' : 'text-gray-300 hover:text-white'
+                        }`}
                     >
                         <FaHome className="text-gray-400 group-hover:text-white transition-colors duration-200" />
                         <span className="text-sm font-medium">Home</span>
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></div>
+                        <div className={`absolute bottom-0 left-0 w-full h-0.5 bg-white transform transition-transform duration-200 origin-left ${
+                            location.pathname === '/' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                        }`}></div>
                     </button>
                     <button
-                        onClick={() => onNavClick('about')}
-                        className="flex items-center space-x-2 text-white hover:text-gray-200 transition-all duration-200 relative group"
+                        onClick={() => {
+                            navigate('/about');
+                            onNavClick('about');
+                        }}
+                        className={`flex items-center space-x-2 transition-all duration-200 relative group ${
+                            location.pathname === '/about' ? 'text-white' : 'text-gray-300 hover:text-white'
+                        }`}
                     >
                         <FaInfoCircle className="text-gray-400 group-hover:text-white transition-colors duration-200" />
                         <span className="text-sm font-medium">Sobre o site</span>
-                        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></div>
+                        <div className={`absolute bottom-0 left-0 w-full h-0.5 bg-white transform transition-transform duration-200 origin-left ${
+                            location.pathname === '/about' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                        }`}></div>
                     </button>
                 </div>
 
@@ -76,6 +93,7 @@ function Navbar({ onNavClick }) {
                     <div className="flex flex-col items-center pt-8 space-y-4 px-4">
                         <button
                             onClick={() => {
+                                navigate('/');
                                 onNavClick('home');
                                 setIsMenuOpen(false);
                             }}
@@ -91,6 +109,7 @@ function Navbar({ onNavClick }) {
                         </button>
                         <button
                             onClick={() => {
+                                navigate('/about');
                                 onNavClick('about');
                                 setIsMenuOpen(false);
                             }}

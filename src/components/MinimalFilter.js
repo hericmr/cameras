@@ -192,3 +192,4 @@ MinimalFilter.propTypes = {
 
 export default MinimalFilter;
 
+

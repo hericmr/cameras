@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Para GitHub Pages, usa o basename do package.json homepage
+// O homepage é "https://hericmr.github.io/cameras", então o basename é "/cameras"
+const basename = process.env.PUBLIC_URL || '/cameras';
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter basename={basename}>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

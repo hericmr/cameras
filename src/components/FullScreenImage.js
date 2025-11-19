@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
-import { FaTimes, FaSync, FaChevronLeft, FaChevronRight, FaInfoCircle } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
+import { FaTimes, FaSync, FaChevronLeft, FaChevronRight, FaInfoCircle, FaShare } from 'react-icons/fa';
 import "../assets/FullScreenImage.css";
 import { useUpdate } from "../context/UpdateContext";
 import { CameraDetails } from "./CameraDetails";
@@ -9,14 +10,15 @@ import { CameraDetails } from "./CameraDetails";
 const LOADING_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23000000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='system-ui' font-size='18'%3ECarregando...%3C/text%3E%3C/svg%3E";
 const ERROR_IMAGE_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23000000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ef4444' font-family='system-ui' font-size='18'%3EErro ao carregar imagem%3C/text%3E%3C/svg%3E";
 
-function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamera, hasPrevious, hasNext, cameraData }) {
+function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamera, hasPrevious, hasNext, cameraData, cameraId }) {
     // Estados
     const [state, setState] = useState({
         currentImageUrl: LOADING_PLACEHOLDER, // Começa com placeholder de loading (igual ao site oficial)
         isLoading: true,
         error: null,
         showDetails: false,
-        hasLoadedOnce: false // Flag para primeira carga (igual ao site oficial: carregou)
+        hasLoadedOnce: false, // Flag para primeira carga (igual ao site oficial: carregou)
+        linkCopied: false // Flag para mostrar feedback de link copiado
     });
     
     // Refs
@@ -25,8 +27,9 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
     const touchStartX = useRef(null);
     const touchEndX = useRef(null);
     const { setIsPaused } = useUpdate(); // Get pause control from context
+    const navigate = useNavigate();
     
-    const { currentImageUrl, isLoading, error, showDetails, hasLoadedOnce } = state;
+    const { currentImageUrl, isLoading, error, showDetails, hasLoadedOnce, linkCopied } = state;
     
     // Pause other camera updates when fullscreen opens, resume when it closes
     useEffect(() => {
@@ -89,6 +92,40 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
     const toggleDetails = useCallback(() => {
         setStateValue('showDetails', !showDetails);
     }, [showDetails, setStateValue]);
+
+    const handleShare = useCallback(async () => {
+        if (!cameraId) return;
+        
+        // Usa a URL atual da página como base
+        const currentUrl = window.location.origin + window.location.pathname.split('/camera/')[0] + `/camera/${cameraId}`;
+        
+        // Tenta usar a Web Share API se disponível
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: title || 'Câmera de Santos',
+                    text: `Veja esta câmera ao vivo: ${title || 'Câmera de Santos'}`,
+                    url: currentUrl
+                });
+            } catch (err) {
+                // Se o usuário cancelar ou houver erro, copia para clipboard
+                if (err.name !== 'AbortError') {
+                    await navigator.clipboard.writeText(currentUrl);
+                    setStateValue('linkCopied', true);
+                    setTimeout(() => setStateValue('linkCopied', false), 2000);
+                }
+            }
+        } else {
+            // Fallback: copia para clipboard
+            try {
+                await navigator.clipboard.writeText(currentUrl);
+                setStateValue('linkCopied', true);
+                setTimeout(() => setStateValue('linkCopied', false), 2000);
+            } catch (err) {
+                console.error('Erro ao copiar link:', err);
+            }
+        }
+    }, [cameraId, title, setStateValue]);
     
     // Funções de toque para navegação em dispositivos móveis
     const handleTouchStart = useCallback((e) => {
@@ -184,6 +221,16 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     label="Atualizar"
                     disabled={isLoading}
                 />
+
+                {cameraId && (
+                    <ActionButton
+                        onClick={handleShare}
+                        title={linkCopied ? "Link copiado!" : "Compartilhar câmera"}
+                        icon={<FaShare className="text-white text-lg md:text-xl group-hover:text-gray-300" />}
+                        label={linkCopied ? "Copiado!" : "Compartilhar"}
+                        active={linkCopied}
+                    />
+                )}
 
                 <ActionButton
                     onClick={toggleDetails}
@@ -299,7 +346,8 @@ FullScreenImage.propTypes = {
     onNextCamera: PropTypes.func,
     hasPrevious: PropTypes.bool,
     hasNext: PropTypes.bool,
-    cameraData: PropTypes.object
+    cameraData: PropTypes.object,
+    cameraId: PropTypes.string
 };
 
 export default FullScreenImage;
