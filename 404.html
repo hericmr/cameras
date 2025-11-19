@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2a2a2a" />
+    <title>Câmeras ao Vivo de Santos</title>
+    <script>
+      // Redireciona para index.html para suportar React Router no GitHub Pages
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+      window.location.replace(
+        window.location.origin + 
+        (path.startsWith('/cameras') ? '/cameras' : '') + 
+        '/index.html' + 
+        search + 
+        hash
+      );
+    </script>
+  </head>
+  <body>
+    <noscript>
+      Você precisa habilitar o JavaScript para executar esta aplicação.
+      <a href="/index.html">Clique aqui para ir para a página inicial</a>
+    </noscript>
+  </body>
+</html>
+
