@@ -2,6 +2,9 @@
   command = "npm run build"
   publish = "build"
 
+[build.environment]
+  CI = "false"
+
 # Habilita suporte a SPA (Single Page Application)
 # Redireciona todas as rotas para o index.html para o React Router funcionar
 [[redirects]]
