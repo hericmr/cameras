@@ -4,6 +4,7 @@
 
 [build.environment]
   CI = "false"
+  SECRETS_SCAN_OMIT_KEYS = "REACT_APP_SUPABASE_URL,REACT_APP_SUPABASE_ANON_KEY"
 
 # Habilita suporte a SPA (Single Page Application)
 # Redireciona todas as rotas para o index.html para o React Router funcionar
