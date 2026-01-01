@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Para GitHub Pages, usa o basename do package.json homepage
 // O homepage é "https://hericmr.github.io/cameras", então o basename é "/cameras"
-const basename = process.env.PUBLIC_URL || '/cameras';
+const basename = process.env.PUBLIC_URL || '/';
 root.render(
   <React.StrictMode>
     <BrowserRouter basename={basename}>
