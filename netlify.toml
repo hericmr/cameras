@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# Habilita suporte a SPA (Single Page Application)
+# Redireciona todas as rotas para o index.html para o React Router funcionar
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true

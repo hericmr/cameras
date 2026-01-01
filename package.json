@@ -19,7 +19,6 @@
     "react-window": "^1.8.11",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://hericmr.github.io/cameras",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
