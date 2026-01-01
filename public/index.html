@@ -25,37 +25,36 @@
 <body>
   <noscript>Você precisa habilitar o JavaScript para executar esta aplicação.</noscript>
   <div id="root"></div>
-</body>
-<script>
-  (function () {
-    // REACT_APP_ prefix is required for Create React App environment variables in index.html
-    const SUPABASE_URL = '%REACT_APP_SUPABASE_URL%';
-    const SUPABASE_ANON_KEY = '%REACT_APP_SUPABASE_ANON_KEY%';
+  <script>
+    (function () {
+      // REACT_APP_ prefix is required for Create React App environment variables in index.html
+      const SUPABASE_URL = '%REACT_APP_SUPABASE_URL%';
+      const SUPABASE_ANON_KEY = '%REACT_APP_SUPABASE_ANON_KEY%';
 
-    // Check if variables are properly replaced
-    if (!SUPABASE_URL || SUPABASE_URL.startsWith('%') || !SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.startsWith('%')) {
-      console.warn('Supabase analytics skipped: Environment variables not set.');
-      return;
-    }
+      // Check if variables are properly replaced
+      if (!SUPABASE_URL || SUPABASE_URL.startsWith('%') || !SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.startsWith('%')) {
+        console.warn('Supabase analytics skipped: Environment variables not set.');
+        return;
+      }
 
-    const data = {
-      url: window.location.href,
-      user_agent: navigator.userAgent,
-      referrer: document.referrer
-    };
+      const data = {
+        url: window.location.href,
+        user_agent: navigator.userAgent,
+        referrer: document.referrer
+      };
 
-    fetch(`${SUPABASE_URL}/rest/v1/acessos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify(data)
-    })
-      .catch(err => console.error('Erro ao enviar analytics:', err));
-  })();
-</script>
+      fetch(`${SUPABASE_URL}/rest/v1/acessos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify(data)
+      })
+        .catch(err => console.error('Erro ao enviar analytics:', err));
+    })();
+  </script>
 </body>
 
 </html>
