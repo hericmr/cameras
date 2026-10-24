@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 import { FaTimes, FaSync, FaChevronLeft, FaChevronRight, FaInfoCircle, FaShare } from 'react-icons/fa';
 import "../assets/FullScreenImage.css";
 import { useUpdate } from "../context/UpdateContext";
 import { CameraDetails } from "./CameraDetails";
+import { useCameraFrame } from "../hooks/useCameraFrame";
 
 // URLs de fallback
 const LOADING_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23000000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='system-ui' font-size='18'%3ECarregando...%3C/text%3E%3C/svg%3E";
@@ -12,24 +12,15 @@ const ERROR_IMAGE_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000
 
 function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamera, hasPrevious, hasNext, cameraData, cameraId }) {
     // Estados
-    const [state, setState] = useState({
-        currentImageUrl: LOADING_PLACEHOLDER, // Começa com placeholder de loading (igual ao site oficial)
-        isLoading: true,
-        error: null,
-        showDetails: false,
-        hasLoadedOnce: false, // Flag para primeira carga (igual ao site oficial: carregou)
-        linkCopied: false // Flag para mostrar feedback de link copiado
-    });
-    
+    const [showDetails, setShowDetails] = useState(false);
+    const [linkCopied, setLinkCopied] = useState(false); // Feedback de link copiado
+    const { src, isLoading, error, refresh: handleRefresh } = useCameraFrame(imageUrl);
+    const currentImageUrl = src || (error ? ERROR_IMAGE_URL : LOADING_PLACEHOLDER);
+
     // Refs
-    const imageRef = useRef(null);
-    const updateTimeoutRef = useRef(null);
     const touchStartX = useRef(null);
     const touchEndX = useRef(null);
     const { setIsPaused } = useUpdate(); // Get pause control from context
-    const navigate = useNavigate();
-    
-    const { currentImageUrl, isLoading, error, showDetails, hasLoadedOnce, linkCopied } = state;
     
     // Pause other camera updates when fullscreen opens, resume when it closes
     useEffect(() => {
@@ -40,58 +31,9 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         };
     }, [setIsPaused]);
     
-    // Função auxiliar para extrair a URL base (sem query parameters)
-    const getBaseUrl = useCallback((url) => {
-        // Remove qualquer query string existente (incluindo ?t=, &t=, etc)
-        return url.split('?')[0];
-    }, []);
-
-    // Funções auxiliares
-    const updateUrlWithTimestamp = useCallback(() => {
-        const baseUrl = getBaseUrl(imageUrl);
-        return `${baseUrl}?t=${new Date().getTime()}`;
-    }, [imageUrl, getBaseUrl]);
-    
-    const setStateValue = useCallback((key, value) => {
-        setState(prevState => ({ ...prevState, [key]: value }));
-    }, []);
-    
-    // Handlers
-    const handleImageLoad = useCallback(() => {
-        setStateValue('isLoading', false);
-        setStateValue('error', null);
-        if (!hasLoadedOnce) {
-            setStateValue('hasLoadedOnce', true); // Marca que já carregou (igual ao site oficial: carregou = true)
-        }
-    }, [setStateValue, hasLoadedOnce]);
-    
-    const handleImageError = useCallback((e) => {
-        setStateValue('isLoading', false);
-        setStateValue('error', 'Erro ao carregar a imagem');
-        // Previne loop infinito de erros (igual ao site oficial: this.onerror=null)
-        if (e.target) {
-            e.target.onerror = null;
-            // Define imagem de erro padrão (igual ao site oficial: erro_camera.png)
-            e.target.src = ERROR_IMAGE_URL;
-        }
-    }, [setStateValue]);
-    
-    const handleRefresh = useCallback(() => {
-        setStateValue('isLoading', true);
-        setStateValue('currentImageUrl', updateUrlWithTimestamp());
-        
-        if (updateTimeoutRef.current) {
-            clearTimeout(updateTimeoutRef.current);
-        }
-        
-        updateTimeoutRef.current = setTimeout(() => {
-            setStateValue('isLoading', false);
-        }, 1000);
-    }, [setStateValue, updateUrlWithTimestamp]);
-    
     const toggleDetails = useCallback(() => {
-        setStateValue('showDetails', !showDetails);
-    }, [showDetails, setStateValue]);
+        setShowDetails(prev => !prev);
+    }, []);
 
     const handleShare = useCallback(async () => {
         if (!cameraId) return;
@@ -111,21 +53,21 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                 // Se o usuário cancelar ou houver erro, copia para clipboard
                 if (err.name !== 'AbortError') {
                     await navigator.clipboard.writeText(currentUrl);
-                    setStateValue('linkCopied', true);
-                    setTimeout(() => setStateValue('linkCopied', false), 2000);
+                    setLinkCopied(true);
+                    setTimeout(() => setLinkCopied(false), 2000);
                 }
             }
         } else {
             // Fallback: copia para clipboard
             try {
                 await navigator.clipboard.writeText(currentUrl);
-                setStateValue('linkCopied', true);
-                setTimeout(() => setStateValue('linkCopied', false), 2000);
+                setLinkCopied(true);
+                setTimeout(() => setLinkCopied(false), 2000);
             } catch (err) {
                 console.error('Erro ao copiar link:', err);
             }
         }
-    }, [cameraId, title, setStateValue]);
+    }, [cameraId, title]);
     
     // Funções de toque para navegação em dispositivos móveis
     const handleTouchStart = useCallback((e) => {
@@ -151,38 +93,6 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
         touchStartX.current = null;
         touchEndX.current = null;
     }, [hasPrevious, hasNext, onNextCamera, onPreviousCamera]);
-    
-    // Efeito para atualizar a imagem periodicamente (igual ao site oficial - setInterval de 6 segundos)
-    useEffect(() => {
-        // Primeira carga: carrega a URL inicial (igual ao site oficial quando carregou = false)
-        setStateValue('hasLoadedOnce', false);
-        setStateValue('isLoading', true);
-        setStateValue('currentImageUrl', updateUrlWithTimestamp());
-
-        // Configura intervalo de atualização (6 segundos como no site oficial)
-        const intervalId = setInterval(() => {
-            // Verifica se já carregou antes de atualizar (igual ao site oficial quando carregou = true)
-            setState(prevState => {
-                if (prevState.hasLoadedOnce) {
-                    const d = new Date();
-                    const baseUrl = getBaseUrl(imageUrl);
-                    // Apenas atualiza o timestamp (igual ao site oficial quando carregou = true)
-                    return {
-                        ...prevState,
-                        currentImageUrl: `${baseUrl}?t=${d.getTime()}`
-                    };
-                }
-                return prevState;
-            });
-        }, 6000);
-
-        return () => {
-            clearInterval(intervalId);
-            if (updateTimeoutRef.current) {
-                clearTimeout(updateTimeoutRef.current);
-            }
-        };
-    }, [imageUrl, setStateValue, updateUrlWithTimestamp, getBaseUrl]);
     
     // Componentes UI
     const renderNavigationButtons = () => (
@@ -281,10 +191,10 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     </div>
                 )}
                 
-                {error && (
+                {error && !src && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[10001]">
                         <div className="text-red-500 text-center p-4">
-                            <p>{error}</p>
+                            <p>Erro ao carregar a imagem</p>
                             <button
                                 onClick={handleRefresh}
                                 className="mt-2 px-3 py-1 md:px-4 md:py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700"
@@ -295,14 +205,16 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     </div>
                 )}
                 
+                {error && src && (
+                    <div className="absolute top-14 left-1/2 -translate-x-1/2 bg-red-600 text-white text-xs px-3 py-1 rounded-full z-[10001]">
+                        Sem sinal — exibindo a última imagem recebida
+                    </div>
+                )}
+
                 <img
-                    ref={imageRef}
                     src={currentImageUrl}
                     alt={title || "Imagem em tela cheia"}
-                    className="w-full h-full object-contain transition-all duration-300"
-                    onLoad={handleImageLoad}
-                    onError={handleImageError}
-                    loading="eager"
+                    className="w-full h-full object-contain"
                 />
 
                 {/* Indicador de navegação por toque - apenas em dispositivos móveis */}
@@ -330,8 +242,8 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
             {showDetails && cameraData && (
                 <CameraDetails
                     cameraData={cameraData}
-                    imageUrl={currentImageUrl}
-                    onClose={() => setStateValue('showDetails', false)}
+                    imageUrl={imageUrl}
+                    onClose={() => setShowDetails(false)}
                 />
             )}
         </div>

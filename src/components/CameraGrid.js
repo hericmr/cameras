@@ -1,18 +1,13 @@
-import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { CameraCard } from "./";
 import cameras from "../assets/cameras_detailed.json";
-import { useUpdate } from "../context/UpdateContext"; // Importa o contexto de pausa
 
 // Memoize the CameraCard component to prevent unnecessary re-renders
 const MemoizedCameraCard = React.memo(CameraCard);
 
-function CameraGrid({ onImageClick, updateInterval = 6000, onCameraCountChange, filteredNeighborhoods = [], sortBy = 'none' }) {
+function CameraGrid({ onImageClick, onCameraCountChange, filteredNeighborhoods = [], sortBy = 'none' }) {
     const allCameras = useMemo(() => Object.values(cameras), []);
-    const [cameraUrls, setCameraUrls] = useState(allCameras);
-    const intervalRef = useRef(null);
-    const { isPaused } = useUpdate(); // Obtém o estado global de pausa
-    const timestampRef = useRef(Date.now());
 
     // Filtra e ordena câmeras baseado nos filtros selecionados
     const filteredAndSortedCameras = useMemo(() => {
@@ -43,32 +38,8 @@ function CameraGrid({ onImageClick, updateInterval = 6000, onCameraCountChange, 
         return filtered;
     }, [allCameras, filteredNeighborhoods, sortBy]);
 
-    // Função auxiliar para extrair a URL base (sem query parameters)
-    const getBaseUrl = useCallback((url) => {
-        // Remove qualquer query string existente (incluindo ?t=, &t=, etc)
-        return url.split('?')[0];
-    }, []);
-
-    // Memoize the update function to prevent recreation on every render
-    const updateImages = useCallback(() => {
-        if (isPaused) return; // Pausa as atualizações se o modal estiver aberto
-        
-        timestampRef.current = Date.now();
-        setCameraUrls((prevCameraUrls) =>
-            prevCameraUrls.map((camera) => {
-                const baseUrl = getBaseUrl(camera.url);
-                return {
-                    ...camera,
-                    url: `${baseUrl}?t=${timestampRef.current}`,
-                };
-            })
-        );
-    }, [isPaused, getBaseUrl]);
-
-    // Atualiza as URLs das câmeras filtradas quando os filtros mudam
+    // Notifica o componente pai sobre a mudança na contagem
     useEffect(() => {
-        setCameraUrls(filteredAndSortedCameras);
-        // Notifica o componente pai sobre a mudança na contagem
         if (onCameraCountChange) {
             // Se não há filtros, passa null para mostrar o total
             if (filteredNeighborhoods.length === 0 && sortBy === 'none') {
@@ -82,39 +53,24 @@ function CameraGrid({ onImageClick, updateInterval = 6000, onCameraCountChange, 
     // Memoize the camera grid to prevent unnecessary re-renders
     const cameraGrid = useMemo(() => (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
-            {cameraUrls.map((camera, index) => {
-                // Encontra o índice original no array completo para navegação correta
-                const originalIndex = allCameras.findIndex(c => c.url === camera.url);
+            {filteredAndSortedCameras.map((camera) => {
+                // Índice no array completo, para abrir a câmera certa mesmo com filtros/ordenação
+                const originalIndex = allCameras.findIndex(c => c.id === camera.id);
                 return (
                     <MemoizedCameraCard
-                        key={camera.url}
+                        key={camera.id}
                         camera={camera}
-                        onImageClick={(data) => onImageClick(data, originalIndex >= 0 ? originalIndex : index)}
-                        index={originalIndex >= 0 ? originalIndex : index}
+                        onImageClick={onImageClick}
+                        index={originalIndex}
                     />
                 );
             })}
         </div>
-    ), [cameraUrls, onImageClick, allCameras]);
-
-    useEffect(() => {
-        // Initial update
-        updateImages();
-
-        // Setup interval
-        intervalRef.current = setInterval(updateImages, updateInterval);
-
-        // Cleanup function
-        return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-            }
-        };
-    }, [updateImages, updateInterval]);
+    ), [filteredAndSortedCameras, onImageClick, allCameras]);
 
     return (
         <>
-            {cameraUrls.length === 0 ? (
+            {filteredAndSortedCameras.length === 0 ? (
                 <div className="text-center py-12 text-gray-400">
                     <p className="text-lg">Nenhuma câmera encontrada com os filtros selecionados.</p>
                     <p className="text-sm mt-2">Tente selecionar outros bairros ou limpar os filtros.</p>
@@ -128,7 +84,6 @@ function CameraGrid({ onImageClick, updateInterval = 6000, onCameraCountChange, 
 
 CameraGrid.propTypes = {
     onImageClick: PropTypes.func.isRequired,
-    updateInterval: PropTypes.number,
     onCameraCountChange: PropTypes.func,
     filteredNeighborhoods: PropTypes.array,
     sortBy: PropTypes.string,

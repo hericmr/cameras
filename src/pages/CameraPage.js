@@ -39,8 +39,6 @@ function CameraPage() {
             setCurrentCameraIndex(newIndex);
             // Usa replace: false para permitir navegação com botão voltar
             navigate(`/camera/${camera.id}`, { replace: false });
-            // Atualiza a URL sem recarregar a página
-            window.history.pushState({}, '', `/camera/${camera.id}`);
         }
     };
 
@@ -52,8 +50,6 @@ function CameraPage() {
             setCurrentCameraIndex(newIndex);
             // Usa replace: false para permitir navegação com botão voltar
             navigate(`/camera/${camera.id}`, { replace: false });
-            // Atualiza a URL sem recarregar a página
-            window.history.pushState({}, '', `/camera/${camera.id}`);
         }
     };
 
