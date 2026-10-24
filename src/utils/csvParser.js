@@ -77,7 +77,7 @@ export async function loadCameraData() {
   }
 
   try {
-    const response = await fetch('/cameras_rows.csv');
+    const response = await fetch(`${process.env.PUBLIC_URL}/cameras_rows.csv`);
     if (!response.ok) {
       throw new Error(`Failed to load CSV: ${response.statusText}`);
     }

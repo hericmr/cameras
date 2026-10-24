@@ -26,6 +26,16 @@
   <noscript>Você precisa habilitar o JavaScript para executar esta aplicação.</noscript>
   <div id="root"></div>
   <script>
+    // GitHub Pages: o 404.html redireciona /cameras/camera/123 para /cameras/?p=/camera/123;
+    // aqui a rota original é restaurada antes do React Router iniciar
+    (function (l) {
+      var match = l.search.match(/[?&]p=([^&]*)/);
+      if (match) {
+        window.history.replaceState(null, '', '%PUBLIC_URL%' + decodeURIComponent(match[1]) + l.hash);
+      }
+    })(window.location);
+  </script>
+  <script>
     (function () {
       // REACT_APP_ prefix is required for Create React App environment variables in index.html
       const SUPABASE_URL = '%REACT_APP_SUPABASE_URL%';

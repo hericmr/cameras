@@ -6,8 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// Para GitHub Pages, usa o basename do package.json homepage
-// O homepage é "https://hericmr.github.io/cameras", então o basename é "/cameras"
+// PUBLIC_URL é "/cameras" no build do GitHub Pages e vazio no Netlify (raiz)
 const basename = process.env.PUBLIC_URL || '/';
 root.render(
   <React.StrictMode>
