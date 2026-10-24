@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import { FaEllipsisV, FaSync, FaMoon, FaExpand, FaInfoCircle, FaMapMarkerAlt, FaRoad } from 'react-icons/fa';
 import { useUpdate } from "../context/UpdateContext";
 import { useCameraFrame } from "../hooks/useCameraFrame";
+import CameraFrame from "./CameraFrame";
 
 // URLs de fallback
 const LOADING_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%231f2937' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%239ca3af' font-family='system-ui' font-size='14'%3ECarregando...%3C/text%3E%3C/svg%3E";
-const ERROR_IMAGE_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%231f2937' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ef4444' font-family='system-ui' font-size='14'%3EImagem indisponível%3C/text%3E%3C/svg%3E";
+const ERROR_IMAGE_URL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%231f2937' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ef4444' font-family='system-ui' font-size='14'%3ESem sinal, tentando novamente...%3C/text%3E%3C/svg%3E";
 
 function CameraCard({ camera, onImageClick, index }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,10 +18,9 @@ function CameraCard({ camera, onImageClick, index }) {
   const { isPaused } = useUpdate(); // Get pause state from context
 
   // Só busca quadros enquanto o card está visível e a tela cheia não está aberta
-  const { src, isLoading, error, refresh } = useCameraFrame(camera.url, {
+  const { frame, isLoading, error, refresh } = useCameraFrame(camera.url, {
     enabled: isVisible && !isPaused,
   });
-  const imageSrc = src || (error ? ERROR_IMAGE_URL : LOADING_PLACEHOLDER);
 
   // Intersection Observer para detectar quando o card está visível
   useEffect(() => {
@@ -69,12 +69,12 @@ function CameraCard({ camera, onImageClick, index }) {
             Câmera com Problemas
           </div>
         )}
-        {error && src && (
+        {error && frame && (
           <div className="bg-red-600 text-white text-xs px-2 py-1 rounded-full font-medium">
             Sem sinal
           </div>
         )}
-        {isLoading && src && (
+        {isLoading && frame && (
           <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-medium flex items-center gap-1">
             <FaSync className="animate-spin" /> Atualizando
           </div>
@@ -137,14 +137,14 @@ function CameraCard({ camera, onImageClick, index }) {
 
       {/* Imagem com fallback e retentativa */}
       <div className="w-full h-[300px] bg-gray-900 flex items-center justify-center overflow-hidden relative">
-        <img
-          src={imageSrc}
+        <CameraFrame
+          frame={frame}
+          fallbackSrc={error ? ERROR_IMAGE_URL : LOADING_PLACEHOLDER}
           alt={camera.neighborhood || camera.street || "Imagem da câmera"}
           className={`w-full h-full object-cover cursor-pointer ${
             isNightVision ? "night-vision" : ""
           }`}
           onClick={openCamera}
-          aria-label={`Clique para visualizar a câmera ${camera.camera_number || "desconhecida"}`}
         />
       </div>
 

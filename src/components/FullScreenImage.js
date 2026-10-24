@@ -5,6 +5,7 @@ import "../assets/FullScreenImage.css";
 import { useUpdate } from "../context/UpdateContext";
 import { CameraDetails } from "./CameraDetails";
 import { useCameraFrame } from "../hooks/useCameraFrame";
+import CameraFrame from "./CameraFrame";
 
 // URLs de fallback
 const LOADING_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23000000' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='system-ui' font-size='18'%3ECarregando...%3C/text%3E%3C/svg%3E";
@@ -14,8 +15,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
     // Estados
     const [showDetails, setShowDetails] = useState(false);
     const [linkCopied, setLinkCopied] = useState(false); // Feedback de link copiado
-    const { src, isLoading, error, refresh: handleRefresh } = useCameraFrame(imageUrl);
-    const currentImageUrl = src || (error ? ERROR_IMAGE_URL : LOADING_PLACEHOLDER);
+    const { frame, isLoading, error, refresh: handleRefresh } = useCameraFrame(imageUrl);
 
     // Refs
     const touchStartX = useRef(null);
@@ -191,7 +191,7 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     </div>
                 )}
                 
-                {error && !src && (
+                {error && !frame && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[10001]">
                         <div className="text-red-500 text-center p-4">
                             <p>Erro ao carregar a imagem</p>
@@ -205,14 +205,15 @@ function FullScreenImage({ imageUrl, close, title, onPreviousCamera, onNextCamer
                     </div>
                 )}
                 
-                {error && src && (
+                {error && frame && (
                     <div className="absolute top-14 left-1/2 -translate-x-1/2 bg-red-600 text-white text-xs px-3 py-1 rounded-full z-[10001]">
                         Sem sinal — exibindo a última imagem recebida
                     </div>
                 )}
 
-                <img
-                    src={currentImageUrl}
+                <CameraFrame
+                    frame={frame}
+                    fallbackSrc={error ? ERROR_IMAGE_URL : LOADING_PLACEHOLDER}
                     alt={title || "Imagem em tela cheia"}
                     className="w-full h-full object-contain"
                 />

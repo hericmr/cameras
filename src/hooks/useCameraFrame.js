@@ -8,8 +8,14 @@ const REQUEST_TIMEOUT = 15000;
 const MAX_FAILURES = 3;
 const RETRY_DELAY = 1500;
 
+// Quando o servidor recusa, todas as câmeras esperam juntas (1s, 2s, 4s... até 30s)
+const MAX_BACKOFF = 30000;
+
 let activeRequests = 0;
 const queue = [];
+let pausedUntil = 0;
+let backoff = 0;
+let pumpTimer = null;
 
 function createRelease() {
     let released = false;
@@ -21,7 +27,28 @@ function createRelease() {
     };
 }
 
+function reportResult(ok) {
+    if (ok) {
+        backoff = 0;
+        return;
+    }
+    // Várias requisições simultâneas falhando contam como uma só rodada
+    if (Date.now() < pausedUntil) return;
+    backoff = Math.min(backoff ? backoff * 2 : 1000, MAX_BACKOFF);
+    pausedUntil = Date.now() + backoff;
+}
+
 function pump() {
+    const wait = pausedUntil - Date.now();
+    if (wait > 0) {
+        if (!pumpTimer) {
+            pumpTimer = setTimeout(() => {
+                pumpTimer = null;
+                pump();
+            }, wait);
+        }
+        return;
+    }
     while (activeRequests < MAX_CONCURRENT && queue.length) {
         activeRequests++;
         queue.shift()(createRelease());
@@ -36,11 +63,12 @@ function schedule(task) {
 // Remove qualquer query string existente (incluindo ?t=, &t=, etc)
 const getBaseUrl = (url) => url.split('?')[0];
 
-// Carrega quadros da câmera em segundo plano e só troca a imagem exibida quando
-// o novo quadro termina de carregar. Assim não há "piscadas", e uma falha
-// mantém o último quadro bom na tela em vez de trocar pela imagem de erro.
+// Carrega quadros da câmera em segundo plano e devolve o próprio elemento <img>
+// já carregado, para ser exibido sem pedir a imagem de novo ao servidor (uma
+// segunda requisição pode levar 503 e deixar a imagem quebrada). Uma falha
+// mantém o último quadro bom na tela.
 export function useCameraFrame(url, { enabled = true, interval = 6000 } = {}) {
-    const [src, setSrc] = useState(null);
+    const [frame, setFrame] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
     const urlRef = useRef(url);
@@ -79,14 +107,17 @@ export function useCameraFrame(url, { enabled = true, interval = 6000 } = {}) {
             };
 
             img.onload = () => {
+                reportResult(true);
                 if (!finish()) return;
                 hasFrameRef.current = true;
                 failuresRef.current = 0;
-                setSrc(frameUrl);
+                setFrame(img);
                 setError(false);
                 setIsLoading(false);
             };
             img.onerror = () => {
+                if (settled) return;
+                reportResult(false);
                 if (!finish()) return;
                 failuresRef.current++;
                 if (failuresRef.current >= MAX_FAILURES) {
@@ -108,7 +139,7 @@ export function useCameraFrame(url, { enabled = true, interval = 6000 } = {}) {
         inFlightRef.current = null;
         hasFrameRef.current = false;
         failuresRef.current = 0;
-        setSrc(null);
+        setFrame(null);
         setError(false);
         return () => {
             urlRef.current = null;
@@ -134,5 +165,5 @@ export function useCameraFrame(url, { enabled = true, interval = 6000 } = {}) {
         loadFrame();
     }, [loadFrame]);
 
-    return { src, isLoading: isLoading || (enabled && !src && !error), error, refresh };
+    return { frame, isLoading: isLoading || (enabled && !frame && !error), error, refresh };
 }
